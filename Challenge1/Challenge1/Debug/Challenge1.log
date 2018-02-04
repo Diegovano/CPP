@@ -1,0 +1,4 @@
+﻿  Source.cpp
+d:\diego\source\repos\challenge1\challenge1\source.cpp(20): warning C4715: 'sqrRt': not all control paths return a value
+  Challenge1.vcxproj -> D:\Diego\source\repos\Challenge1\Debug\Challenge1.exe
+  Challenge1.vcxproj -> D:\Diego\source\repos\Challenge1\Debug\Challenge1.pdb (Partial PDB)

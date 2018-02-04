@@ -1,0 +1,4 @@
+﻿  Source.cpp
+d:\diego\source\repos\calc_printbinval\calc_printbinval\source.cpp(91): warning C4554: '<<': check operator precedence for possible error; use parentheses to clarify precedence
+  calc_printbinval.vcxproj -> D:\Diego\source\repos\calc_printbinval\Debug\calc_printbinval.exe
+  calc_printbinval.vcxproj -> D:\Diego\source\repos\calc_printbinval\Debug\calc_printbinval.pdb (Partial PDB)

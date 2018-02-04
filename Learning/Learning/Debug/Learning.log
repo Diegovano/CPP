@@ -1,0 +1,10 @@
+﻿  main.cpp
+d:\diego\source\repos\learning\learning\main.cpp(7): error C2678: binary '==': no operator found which takes a left-hand operand of type 'std::string' (or there is no acceptable conversion)
+  d:\program files (x86)\visual studio\vc\tools\msvc\14.11.25503\include\exception(332): note: could be 'bool std::operator ==(const std::exception_ptr &,const std::exception_ptr &) throw()' [found using argument-dependent lookup]
+  d:\program files (x86)\visual studio\vc\tools\msvc\14.11.25503\include\exception(337): note: or       'bool std::operator ==(std::nullptr_t,const std::exception_ptr &) throw()' [found using argument-dependent lookup]
+  d:\program files (x86)\visual studio\vc\tools\msvc\14.11.25503\include\exception(342): note: or       'bool std::operator ==(const std::exception_ptr &,std::nullptr_t) throw()' [found using argument-dependent lookup]
+  d:\program files (x86)\visual studio\vc\tools\msvc\14.11.25503\include\system_error(354): note: or       'bool std::operator ==(const std::error_code &,const std::error_code &) noexcept' [found using argument-dependent lookup]
+  d:\program files (x86)\visual studio\vc\tools\msvc\14.11.25503\include\system_error(360): note: or       'bool std::operator ==(const std::error_code &,const std::error_condition &) noexcept' [found using argument-dependent lookup]
+  d:\program files (x86)\visual studio\vc\tools\msvc\14.11.25503\include\system_error(366): note: or       'bool std::operator ==(const std::error_condition &,const std::error_code &) noexcept' [found using argument-dependent lookup]
+  d:\program files (x86)\visual studio\vc\tools\msvc\14.11.25503\include\system_error(372): note: or       'bool std::operator ==(const std::error_condition &,const std::error_condition &) noexcept' [found using argument-dependent lookup]
+  d:\diego\source\repos\learning\learning\main.cpp(7): note: while trying to match the argument list '(std::string, char)'

@@ -1,0 +1,4 @@
+﻿  Source.cpp
+d:\diego\source\repos\challenge0\challenge0\source.cpp(37): warning C4101: 'srtdNums': unreferenced local variable
+  Challenge0.vcxproj -> D:\Diego\source\repos\Challenge0\Debug\Challenge0.exe
+  Challenge0.vcxproj -> D:\Diego\source\repos\Challenge0\Debug\Challenge0.pdb (Partial PDB)
