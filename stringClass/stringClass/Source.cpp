@@ -8,7 +8,7 @@ const size_t dString::ssize(void) {
 }
 
 const void dString::getlne(std::istream& is, dString &obj) {
-	dString cont(static_cast<size_t>(0));
+	dString cont;
 	while (std::cin >> cont) {
 		obj.pushBack(cont.str);
 		if (is.peek()=='\n') return;
@@ -99,9 +99,7 @@ int main() {
 	barfoo.pushBack('a');
 	std::cout << barfoo << " " << barfoo.ssize() << std::endl;
 	std::cout << ((barfoo==foo) ? "Equal" : "Not Equal")  << " " << foo << std::endl;
-	dString foofoo(static_cast<size_t>(0));
-	std::cin >> foofoo;
-	std::cout << foofoo << " " << foofoo.ssize() << std::endl;
+	dString foofoo;
 	dString::getlne(std::cin, foofoo);
 	std::cout << foofoo << " " << foofoo.ssize() << std::endl;
 	system("pause");

@@ -15,7 +15,8 @@ public:
 		this->str[sze] = '\0';
 	}
 	dString() {
-		dString(static_cast<size_t>(0));
+		this->str = new char[1];
+		this->str[0] = '\0';
 	}
 	const size_t ssize();
 	static const void dString::getlne(std::istream& is, dString &obj);
