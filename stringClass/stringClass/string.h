@@ -15,11 +15,13 @@ public:
 		this->str[sze] = '\0';
 	}
 	dString() {
+		dString(static_cast<size_t>(0));
 	}
 	const size_t ssize();
+	static const void dString::getlne(std::istream& is, dString &obj);
+	const char operator[](const size_t loc);
 	void pushBack(const char *ent);
 	void pushBack(const char ent);
-	const char operator[](const size_t loc);
 	const dString& operator+=(dString &obj);
 	const dString& operator+=(const size_t sze);
 	const dString operator+(dString &obj);
