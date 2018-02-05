@@ -85,7 +85,7 @@ std::istream& operator>>(std::istream& is, const dString &obj) {
 }
 
 int main() {
-	/*dString foo = "Hello";
+	dString foo = "Hello";
 	std::cout << foo.str << " " << foo.ssize() << std::endl;
 	dString bar = " World!";
 	foo += bar;
@@ -98,11 +98,11 @@ int main() {
 	std::cout << barfoo.str << " " << barfoo.ssize() << std::endl;
 	barfoo.pushBack('a');
 	std::cout << barfoo << " " << barfoo.ssize() << std::endl;
-	std::cout << ((barfoo==foo) ? "Equal" : "Not Equal")  << " " << foo << std::endl;*/
+	std::cout << ((barfoo==foo) ? "Equal" : "Not Equal")  << " " << foo << std::endl;
 	dString foofoo(static_cast<size_t>(0));
+	std::cin >> foofoo;
 	std::cout << foofoo << " " << foofoo.ssize() << std::endl;
 	dString::getlne(std::cin, foofoo);
-//	std::cin >> foofoo;
 	std::cout << foofoo << " " << foofoo.ssize() << std::endl;
 	system("pause");
 	return 0;
