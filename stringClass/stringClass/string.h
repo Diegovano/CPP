@@ -18,6 +18,9 @@ public:
 		this->str = new char[1];
 		this->str[0] = '\0';
 	}
+	~dString() {
+		delete str;
+	}
 	const size_t ssize();
 	static const void dString::getlne(std::istream& is, dString &obj);
 	const char operator[](const size_t loc);
