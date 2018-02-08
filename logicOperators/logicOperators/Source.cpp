@@ -1,4 +1,4 @@
-
+#include <iostream>
 #include "vectorClass.h"
 
 int bitArrToInt(Vector toChg) {
