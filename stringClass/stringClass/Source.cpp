@@ -1,6 +1,11 @@
 #include <iostream>
 #include "string.h"
 
+const char* dString::returnStr() const
+{
+	return str;
+}
+
 const size_t dString::ssize(void) {
 	size_t nCharLoc = 0;
 	for (; this->str[nCharLoc] != '\0'; ++nCharLoc);
@@ -31,7 +36,7 @@ void dString::pushBack(const char ent) {
 	*this += temp;
 }
 
-const dString& dString::operator+=(dString &obj) {
+const dString& dString::operator+=(dString obj) {
 	dString temp(this->ssize() + obj.ssize());
 	for (size_t index = 0; index < this->ssize(); ++index) temp.str[index] = this->str[index];
 	for (size_t index = 0; index <= obj.ssize(); ++index) temp.str[this->ssize() + index] = obj.str[index]; //index<=obj.size to inc '\0'
@@ -75,27 +80,27 @@ const dString& dString::operator=(const char *ent) {
 }
 
 std::ostream& operator<<(std::ostream& os, const dString &obj) {
-	os << obj.str;
+	os << obj.returnStr();
 	return os;
 }
 
 std::istream& operator>>(std::istream& is, const dString &obj) {
-	is >> obj.str;
+	is >> obj.str; //recurive on all paths if use function to return string
 	return is;
 }
 
 int main() {
 	dString foo = "Hello";
-	std::cout << foo.str << " " << foo.ssize() << std::endl;
+	std::cout << foo.returnStr() << " " << foo.ssize() << std::endl;
 	dString bar = " World!";
 	foo += bar;
-	std::cout << foo.str << " " << foo.ssize() << std::endl;
+	std::cout << foo.returnStr() << " " << foo.ssize() << std::endl;
 	dString foobar = foo + bar;
-	std::cout << foobar.str << " " << foobar.ssize() << std::endl;
+	std::cout << foobar.returnStr() << " " << foobar.ssize() << std::endl;
 	foobar += 5;
-	std::cout << foobar.str << " " << foobar.ssize() << std::endl;
+	std::cout << foobar.returnStr() << " " << foobar.ssize() << std::endl;
 	dString barfoo(bar + 5);
-	std::cout << barfoo.str << " " << barfoo.ssize() << std::endl;
+	std::cout << barfoo.returnStr() << " " << barfoo.ssize() << std::endl;
 	barfoo.pushBack('a');
 	std::cout << barfoo << " " << barfoo.ssize() << std::endl;
 	std::cout << ((barfoo==foo) ? "Equal" : "Not Equal")  << " " << foo << std::endl;
