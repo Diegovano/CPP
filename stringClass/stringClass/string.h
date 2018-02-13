@@ -21,10 +21,9 @@ public:
 	dString() : dString(static_cast<size_t>(0))
 	{
 	}
-/*	~dString()  destructor still not functioning
+	~dString()
 	{
-		delete[] str;
-	}*/
+	}
 	const char* returnStr() const;
 	const size_t ssize();
 	static const void dString::getlne(std::istream& is, dString &obj);
