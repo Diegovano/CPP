@@ -124,14 +124,11 @@
     <ClCompile Include="Project Files\orderedList\orderedList.cpp" />
     <ClCompile Include="Project Files\parser\parser.cpp" />
     <ClCompile Include="Project Files\token\token.cpp" />
-    <ClCompile Include="Project Files\vector\vector.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dependecies\dStirng\dString.h" />
     <ClInclude Include="Project Files\orderedList\orderedList.h" />
     <ClInclude Include="Project Files\parser\parser.h" />
     <ClInclude Include="Project Files\token\token.h" />
-    <ClInclude Include="Project Files\vector\vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

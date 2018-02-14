@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Project Files\vector\vector.h"
-//#include "parser\parser.h"
+#include "Dependecies\vector\vector.h"
+//#include "Project Files\parser\parser.h"
 
 int main() {
 	vector<int> vec;
@@ -9,7 +9,7 @@ int main() {
 		vec.pushBack(index);
 	}
 	vec.printVec();
-	/*dString entered;
+/*	dString entered;
 	dString::getlne(std::cin, entered);
 	parser parse(entered.str);*/
 	system("pause");
