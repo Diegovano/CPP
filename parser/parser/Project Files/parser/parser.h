@@ -1,6 +1,6 @@
 #pragma once
-#include "..\Dependecies\dStirng\dString.h"
-#include "token.h"
+#include "..\..\Dependecies\dStirng\dString.h"
+#include "..\token\token.h"
 
 class parser 
 {

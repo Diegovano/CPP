@@ -1,5 +1,5 @@
 #pragma once
-#include "..\Dependecies\dStirng\dString.h"
+#include "..\..\Dependecies\dStirng\dString.h"
 
 class Token 
 {

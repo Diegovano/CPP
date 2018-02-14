@@ -75,7 +75,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
     </ClCompile>
+    <Link>
+      <AdditionalOptions>/VERBOSE:INCR %(AdditionalOptions)</AdditionalOptions>
+      <ShowProgress>
+      </ShowProgress>
+      <LinkStatus>
+      </LinkStatus>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -113,17 +121,17 @@
   <ItemGroup>
     <ClCompile Include="Dependecies\dStirng\dString.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="parser\orderedList.cpp" />
-    <ClCompile Include="parser\parser.cpp" />
-    <ClCompile Include="parser\token.cpp" />
-    <ClCompile Include="parser\vector.cpp" />
+    <ClCompile Include="Project Files\orderedList\orderedList.cpp" />
+    <ClCompile Include="Project Files\parser\parser.cpp" />
+    <ClCompile Include="Project Files\token\token.cpp" />
+    <ClCompile Include="Project Files\vector\vector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependecies\dStirng\dString.h" />
-    <ClInclude Include="parser\orderedList.h" />
-    <ClInclude Include="parser\parser.h" />
-    <ClInclude Include="parser\token.h" />
-    <ClInclude Include="parser\vector.h" />
+    <ClInclude Include="Project Files\orderedList\orderedList.h" />
+    <ClInclude Include="Project Files\parser\parser.h" />
+    <ClInclude Include="Project Files\token\token.h" />
+    <ClInclude Include="Project Files\vector\vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

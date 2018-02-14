@@ -21,36 +21,36 @@
     <ClCompile Include="Dependecies\dStirng\dString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="parser\parser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="parser\token.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="parser\vector.cpp">
+    <ClCompile Include="Project Files\orderedList\orderedList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="parser\orderedList.cpp">
+    <ClCompile Include="Project Files\parser\parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Project Files\token\token.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Project Files\vector\vector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="parser\parser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Dependecies\dStirng\dString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="parser\token.h">
+    <ClInclude Include="Project Files\orderedList\orderedList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="parser\orderedList.h">
+    <ClInclude Include="Project Files\parser\parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="parser\vector.h">
+    <ClInclude Include="Project Files\token\token.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Project Files\vector\vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
