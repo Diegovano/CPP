@@ -8,7 +8,41 @@ private:
 	size_t vecSize = 0, arrCap = 8;
 	_SType *arr = new _SType[arrCap];
 public:
-	void pushBack(_SType pushd);
-	void printVec();
-	size_t size();
+	void pushBack(_SType pushd)
+	{
+		if (vecSize < arrCap)
+		{
+			arr[vecSize] = pushd;
+		}
+		else
+		{
+			arrCap *= 2;
+			_SType *tempArr = new _SType[arrCap];
+			for (size_t index = 0; index < arrCap / 2; ++index)
+			{
+				tempArr[index] = arr[index];
+			}
+			delete[] arr;
+			arr = tempArr;
+			arr[vecSize] = pushd;
+		}
+		++vecSize;
+	}
+	void printVec()
+	{
+		for (size_t index = 0; index < vecSize; ++index)
+		{
+			std::cout << arr[index] << ' ';
+		}
+		std::cout << std::endl;
+	}
+	size_t size()
+	{
+		return vecSize;
+	}
+	_SType operator[](unsigned int index)
+	{
+		if (index > vecSize) throw;
+		return arr[index]
+	}
 };

@@ -1,12 +1,15 @@
 #pragma once
 #include "..\..\Dependecies\dStirng\dString.h"
 #include "..\token\token.h"
+#include "..\..\Dependecies\vector\vector.h"
 
 class parser 
 {
 private:
 	dString entStr; //Without spaces
-
+	vector<operandToken> oprdTk;
+	vector<operatorToken> oprtTk;
+	unsigned int numOprdTk = 0, numOprtTk = 0;
 public:
 	parser(char *ent) 
 	{
