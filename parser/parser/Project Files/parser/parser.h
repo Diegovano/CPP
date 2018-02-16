@@ -7,9 +7,7 @@ class parser
 {
 private:
 	dString entStr; //Without spaces
-	vector<operandToken> oprdTk;
-	vector<operatorToken> oprtTk;
-	unsigned int numOprdTk = 0, numOprtTk = 0;
+	vector<void*> allTokens;
 public:
 	parser(char *ent) 
 	{

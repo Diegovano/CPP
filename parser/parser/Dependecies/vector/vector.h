@@ -43,6 +43,6 @@ public:
 	_SType operator[](unsigned int index)
 	{
 		if (index > vecSize) throw;
-		return arr[index]
+		return arr[index];
 	}
 };
