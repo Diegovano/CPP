@@ -5,9 +5,11 @@
 
 class parser 
 {
+
 private:
 	dString entStr; //Without spaces
-	vector<void*> allTokens;
+	vector<operandToken> oprdToken;
+	vector<operatorToken> oprtrToken;
 public:
 	parser(char *ent) 
 	{

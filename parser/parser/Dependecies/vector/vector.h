@@ -8,6 +8,9 @@ private:
 	size_t vecSize = 0, arrCap = 8;
 	_SType *arr = new _SType[arrCap];
 public:
+	vector()
+	{
+	}
 	void pushBack(_SType pushd)
 	{
 		if (vecSize < arrCap)

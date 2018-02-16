@@ -9,8 +9,8 @@ void parser::tokeniseStr()
 		{
 			tempStr.pushBack(entStr[iter]);
 		}
-		allTokens.pushBack(new operandToken(tempStr.str));
-		std::cout << *(allTokens[allTokens.size() - 1])->numNumerals;
+		oprdToken.pushBack(*(new operandToken(tempStr.str)));
+		std::cout << oprdToken[oprdToken.size() - 1].retNumNumerals();
 //		operatorToken; //continue here
 	}
 }
