@@ -16,6 +16,7 @@ class operatorToken : protected Token
 private:
 	int precedence;
 public:
+	operatorToken() = default;
 	operatorToken(char tok) : Token::Token(&tok)
 	{
 		if (tok == '*' || tok == '/')precedence = 1;
