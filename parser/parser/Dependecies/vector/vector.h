@@ -5,10 +5,10 @@ template<class _SType>
 class vector
 {
 private:
-	size_t vecSize = 0, arrCap = 8;
-	_SType *arr = new _SType[arrCap];
+	size_t vecSize, arrCap;
+	_SType *arr;
 public:
-	vector()
+	vector() :vecSize(0), arrCap(8), arr(new _SType[arrCap])
 	{
 	}
 	void pushBack(_SType pushd)
