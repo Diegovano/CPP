@@ -44,5 +44,11 @@
     <ClInclude Include="Project Files\token\token.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Dependecies\dStirng\dString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependecies\vector\vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
