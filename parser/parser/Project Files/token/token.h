@@ -5,13 +5,16 @@ class Token
 {
 protected:
 	dString tokn;
+	Token() = default;
 	Token(char *entTok) 
 	{
 		tokn = entTok;
 	}
+public:
+	dString retCont();
 };
 
-class operatorToken : protected Token 
+class operatorToken : public Token 
 {
 private:
 	int precedence;
@@ -24,11 +27,12 @@ public:
 	}
 };
 
-class operandToken : protected Token 
+class operandToken : public Token 
 {
 private:
 	unsigned int numOfNumerals;
 public:
+	operandToken() = default;
 	operandToken(char *tok) : Token::Token(tok)
 	{
 		dString temp(tok);
@@ -37,7 +41,7 @@ public:
 	int retNumNumerals();
 };
 
-class bracketToken : protected Token 
+class bracketToken : public Token 
 {
 private:
 	dString contOfBrack;

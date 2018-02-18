@@ -8,8 +8,8 @@ class parser
 
 private:
 	dString entStr; //Without spaces
-	vector<operandToken> oprdToken;
-	vector<operatorToken> oprtrToken;
+	vector<operandToken*> oprdToken;
+	vector<operatorToken*> oprtrToken;
 public:
 	parser(char *ent) 
 	{
@@ -22,6 +22,7 @@ public:
 	}
 	void tokeniseStr();
 	dString retStr();
+	void printAllTokens();
 };
 
 bool isCharOperator(char ent);
