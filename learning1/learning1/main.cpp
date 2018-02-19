@@ -1,29 +1,45 @@
 #include <iostream>
+#include <string>
 
-int number1 = 1;
-int number2 = 1;
+using namespace std;
 
-/* int main() {
-	std::cout << number1 << std::endl << number2 << std::endl;
-	for (int i = 0; i < 10; i++) {
-		std::cout << (number1 + number2) << std::endl;
-		number1 = number1 + number2;
-		std::cout << (number1 + number2) << std::endl;
-		number2 = number2 + number1;
-//		11235813
-//		system("pause");
+struct swimmingPool
+{
+private:
+	unsigned int length, width, depth;
+	double pricePerM2;
+public:
+	swimmingPool(unsigned int z, unsigned int y, unsigned int x, double price)
+	{
+		length = z; width = y; depth = x; pricePerM2 = price;
 	}
-	system("pause");
-} */
+	void printDimentions()
+	{
+		cout << "Length: " << length << endl
+			<< "Width: " << width << endl
+			<< "Depth: " << depth << endl;
+	}
+	double printPriceOfLand()
+	{
+		return getVolume() * pricePerM2;
+	}
+	double getVolume()
+	{
+		return length * width * depth;
+	}
+	void operator+(unsigned int incrSize)
+	{
+		length += incrSize;
+	}
+};
 
-int main() {
-	const unsigned int sizeOfSequence = 10;
-	int fibSequence[sizeOfSequence];
-	fibSequence[0] = 0;
-	fibSequence[1] = 1;
-	for (unsigned int index = 2; index < sizeOfSequence; index++) 
-		fibSequence[index] = fibSequence[index - 1] + fibSequence[index - 2];
-	for (unsigned int index = 0; index < sizeOfSequence; index++)
-		std::cout << fibSequence[index] << std::endl;
+int main()
+{
+	swimmingPool JacobPool(10, 5, 3, 100);
+	JacobPool.printDimentions();
+	cout << JacobPool.printPriceOfLand() << endl;
+	JacobPool + 5;
+	JacobPool.printDimentions();
 	system("pause");
+	return 0;
 }
