@@ -36,6 +36,10 @@ public:
 	operandToken() = default;
 	operandToken(char *tok) : Token::Token(tok)
 	{
+		for (unsigned int sizeOfEnt = 0; tokn.str[sizeOfEnt] != '\0'; ++sizeOfEnt)
+		{
+			if (tokn.str[sizeOfEnt] - 48 < 0 || tokn.str[sizeOfEnt] - 48 > 9)throw std::runtime_error("Invalid Character present! Cannot convert numbers!");
+		}
 		dString temp(tok);
 		numOfNumerals = temp.ssize();
 	}

@@ -4,11 +4,10 @@
 int main() {
 	try
 	{
-		/*	dString entered;
-			dString::getlne(std::cin, entered);
-			parser parse(entered.str);
-			parse.printAllTokens();*/
-		std::cout << parser::castCharIntToInt("198") << std::endl;
+		dString entered;
+		dString::getlne(std::cin, entered);
+		parser parse(entered.str);
+		parse.printAllTokens();
 		system("pause");
 		return 0;
 	}
