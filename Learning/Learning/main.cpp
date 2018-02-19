@@ -1,58 +1,160 @@
 #include <iostream>
 
-class baseClass
+class dString
 {
 private:
-	char *str;
+	char* str;
 public:
-	baseClass() = default;
-	baseClass(char *ent) : str(ent)
+	dString(const char *ent)
+	{
+		size_t nCharLoc = 0; // equivalent to the size of the string without the null char
+		for (; ent[nCharLoc] != '\0'; ++nCharLoc);
+		this->str = new char[nCharLoc + 1];
+		for (size_t index = 0; index <= nCharLoc; ++index) this->str[index] = ent[index];
+	}
+
+	dString(const size_t sze)
+	{
+		this->str = new char[sze + 1];
+		this->str[sze] = '\0';
+	}
+	dString() : dString(static_cast<size_t>(0))
 	{
 	}
-	void changeStr(char *ent)
+	~dString()
 	{
-		str = ent;
 	}
+	const char* returnStr() const;
+	const size_t ssize();
+	static const void dString::getlne(std::istream& is, dString &obj);
+	const char operator[](const size_t loc);
+	void pushBack(const char *ent);
+	void pushBack(const char ent);
+	const dString& operator+=(dString obj);
+	const dString& operator+=(const size_t sze);
+	const dString operator+(dString &obj);
+	const dString operator+(const size_t sze);
+	const bool dString::operator==(dString &obj);
+	const bool dString::operator!=(dString &obj);
+	friend std::ostream& operator<<(std::ostream &os, const dString &obj);
+	friend std::istream& operator>>(std::istream &is, const dString &obj);
+	const dString& dString::operator=(const char *ent);
 };
 
-class derivedClass : public baseClass
+const char* dString::returnStr() const
 {
-private:
-	bool isItA;
-public:
-	derivedClass() = default;
-	derivedClass(char *ent) : baseClass(ent), isItA(0)
-	{
-		if (*ent == 'A')isItA = 1;
-	}
-	bool isA()
-	{
-		return isItA;
-	}
-};
+	return str;
+}
 
-/*int main()
+const size_t dString::ssize(void) {
+	size_t nCharLoc = 0;
+	for (; this->str[nCharLoc] != '\0'; ++nCharLoc);
+	return nCharLoc;
+}
+
+const void dString::getlne(std::istream& is, dString &obj) {
+	dString cont;
+	while (std::cin >> cont) {
+		obj.pushBack(cont.str);
+		if (is.peek() == '\n') return;
+		obj.pushBack(' ');
+	}
+
+}
+
+const char dString::operator[](const size_t loc) {
+	return this->str[loc];
+}
+
+void dString::pushBack(const char *ent) {
+	dString temp(ent);
+	*this += temp;
+}
+
+void dString::pushBack(const char ent) {
+	dString temp(&ent);
+	*this += temp;
+}
+
+const dString& dString::operator+=(dString obj) {
+	dString temp(this->ssize() + obj.ssize());
+	for (size_t index = 0; index < this->ssize(); ++index) temp.str[index] = this->str[index];
+	for (size_t index = 0; index <= obj.ssize(); ++index) temp.str[this->ssize() + index] = obj.str[index]; //index<=obj.size to inc '\0'
+	this->str = temp.str;
+	return *this;
+}
+
+const dString& dString::operator+=(const size_t sze) {
+	dString temp(sze);
+	return *this += temp;
+}
+
+const dString dString::operator+(dString &obj) {
+	dString temp("");
+	temp += *this;
+	temp += obj;
+	return temp;
+}
+
+const dString dString::operator+(const size_t sze) {
+	dString temp(this->str);
+	temp += sze;
+	return temp;
+}
+
+const bool dString::operator==(dString &obj) {
+	if (this->ssize() != obj.ssize()) return false;
+	for (size_t index = 0; index < this->ssize(); ++index) {
+		if (this->str[index] != obj.str[index]) return false;
+	}
+	return true;
+}
+
+const bool dString::operator!=(dString &obj) {
+	return !(this->operator==(obj));
+}
+
+const dString& dString::operator=(const char *ent) {
+	this->dString::dString(ent);
+	return *this;
+}
+
+std::ostream& operator<<(std::ostream& os, const dString &obj) {
+	os << obj.returnStr();
+	return os;
+}
+
+std::istream& operator>>(std::istream& is, const dString &obj) {
+	is >> obj.str; //recurive on all paths if use function to return string
+	return is;
+}
+
+unsigned int retDigits(unsigned int ent)
 {
-	derivedClass derCl("BAll is good!");
-	if (derCl.isA()) std::cout << "True!\n";
-	else std::cout << "False!\n";
-	derivedClass *arrOfDer = new derivedClass[5];
-	arrOfDer->changeStr("Anything!");
-	if (arrOfDer->isA()) std::cout << "True!\n";
-	else std::cout << "False!\n";
-	system("pause");
-}*/
+	unsigned int digits = 0;
+	if (ent == 0)return 1;
+	while (ent)
+	{
+		ent /= 10;
+		++digits;
+	}
+	return digits;
+}
+
+char* castIntToCharInt(int ent)
+{
+	unsigned int origNumDig = retDigits(ent);
+	char *res = new char[origNumDig];
+	for (unsigned int iter = 0; iter < origNumDig; ++iter)
+	{
+		res[iter] = ent / static_cast<int>(pow(10, retDigits(ent) - iter - 1)) + '0';
+		ent -= res[iter] * pow(10, retDigits(ent) - iter - 1);
+	}
+	return res;
+}
 
 int main()
 {
-	char *foo = "192";
-	int bar = 0;
-	unsigned int sizeOfFoo = 0;
-	for (; foo[sizeOfFoo] != '\0'; ++sizeOfFoo);
-	for (unsigned int index = 0; index < sizeOfFoo; ++index)
-	{
-		bar += (foo[sizeOfFoo - index - 1] - 48) * pow(10, index);
-	}
-	std::cout << bar << std::endl;
+	std::cout << castIntToCharInt(125) << std::endl;
 	system("pause");
 }

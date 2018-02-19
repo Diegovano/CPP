@@ -11,7 +11,7 @@ int main() {
 		system("pause");
 		return 0;
 	}
-	catch (std::runtime_error err)
+	catch (std::exception err)
 	{
 		std::cout << err.what() << std::endl;
 		system("pause");

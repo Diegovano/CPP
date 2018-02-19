@@ -4,20 +4,25 @@
 class Token 
 {
 protected:
+	static unsigned int tokQuant;
+	unsigned int tokNo;
 	dString tokn;
 	Token() = default;
 	Token(char *entTok) 
 	{
+		tokNo = tokQuant++;
 		tokn = entTok;
 	}
 public:
 	dString retCont();
+	unsigned int retTokNo();
+	static unsigned int retTokQuant();
 };
 
 class operatorToken : public Token 
 {
 private:
-	int precedence;
+	unsigned int precedence;
 public:
 	operatorToken() = default;
 	operatorToken(char tok) : Token::Token(&tok)
@@ -25,6 +30,7 @@ public:
 		if (tok == '*' || tok == '/')precedence = 1;
 		else if (tok == '+' || tok == '-')precedence = 0;
 	}
+	unsigned int retPrecedence();
 };
 
 class operandToken : public Token 
@@ -32,18 +38,25 @@ class operandToken : public Token
 private:
 	int toknContInt;
 	unsigned int numOfNumerals;
-	void castCharIntToInt();
 public:
 	operandToken() = default;
+	operandToken(unsigned int tok)
+	{
+
+	}
 	operandToken(char *tok) : Token::Token(tok)
 	{
 		for (unsigned int sizeOfEnt = 0; tokn.str[sizeOfEnt] != '\0'; ++sizeOfEnt)
 		{
-			if (tokn.str[sizeOfEnt] - 48 < 0 || tokn.str[sizeOfEnt] - 48 > 9)throw std::runtime_error("Invalid Character present! Cannot convert numbers!");
+			if (tokn.str[sizeOfEnt] - 48 < 0 || tokn.str[sizeOfEnt] - 48 > 9) 
+			{
+				std::cout << "'" << tokn.str[sizeOfEnt] << "'" << std::endl;
+				throw std::runtime_error("Invalid Character present! Cannot convert to numbers!");
+			}
 		}
 		dString temp(tok);
 		numOfNumerals = temp.ssize();
-		castCharIntToInt();
+		toknContInt = castCharIntToInt(tokn.str);
 	}
 	int retNumNumerals();
 };
@@ -62,3 +75,7 @@ public:
 		}
 	}
 };
+
+int castCharIntToInt(char *ent);
+char* castIntToCharInt(int ent);
+unsigned int retDigits(unsigned int ent);

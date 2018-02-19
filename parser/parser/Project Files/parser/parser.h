@@ -5,12 +5,13 @@
 
 class parser 
 {
-
 private:
 	dString entStr; //Without spaces
-	vector<operandToken*> oprdToken;
+	vector<operandToken*> oprdToken, resTokens;
 	vector<operatorToken*> oprtrToken;
 	void tokeniseStr();
+	void parse();
+	Token* searchID(unsigned int searchID);
 public:
 	parser(char *ent) 
 	{
