@@ -30,8 +30,9 @@ public:
 class operandToken : public Token 
 {
 private:
+	int toknContInt;
 	unsigned int numOfNumerals;
-	int castCharIntToInt();
+	void castCharIntToInt();
 public:
 	operandToken() = default;
 	operandToken(char *tok) : Token::Token(tok)
@@ -42,6 +43,7 @@ public:
 		}
 		dString temp(tok);
 		numOfNumerals = temp.ssize();
+		castCharIntToInt();
 	}
 	int retNumNumerals();
 };

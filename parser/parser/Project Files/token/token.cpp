@@ -10,7 +10,7 @@ int operandToken::retNumNumerals()
 	return numOfNumerals;
 }
 
-int operandToken::castCharIntToInt()
+void operandToken::castCharIntToInt()
 {
 	int conv = 0;
 	unsigned int sizeOfEnt = 0;
@@ -19,5 +19,5 @@ int operandToken::castCharIntToInt()
 	{
 		conv += (tokn.str[sizeOfEnt - index - 1] - 48) * static_cast<int>(pow(10, index));
 	}
-	return conv;
+	toknContInt = conv;
 }
