@@ -31,6 +31,7 @@ class operandToken : public Token
 {
 private:
 	unsigned int numOfNumerals;
+	int castCharIntToInt();
 public:
 	operandToken() = default;
 	operandToken(char *tok) : Token::Token(tok)

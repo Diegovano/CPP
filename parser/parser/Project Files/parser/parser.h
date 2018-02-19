@@ -10,6 +10,7 @@ private:
 	dString entStr; //Without spaces
 	vector<operandToken*> oprdToken;
 	vector<operatorToken*> oprtrToken;
+	void tokeniseStr();
 public:
 	parser(char *ent) 
 	{
@@ -20,7 +21,6 @@ public:
 		}
 		tokeniseStr();
 	}
-	void tokeniseStr();
 	dString retStr();
 	void printAllTokens();
 };

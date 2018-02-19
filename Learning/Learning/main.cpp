@@ -31,7 +31,7 @@ public:
 	}
 };
 
-int main()
+/*int main()
 {
 	derivedClass derCl("BAll is good!");
 	if (derCl.isA()) std::cout << "True!\n";
@@ -40,5 +40,19 @@ int main()
 	arrOfDer->changeStr("Anything!");
 	if (arrOfDer->isA()) std::cout << "True!\n";
 	else std::cout << "False!\n";
+	system("pause");
+}*/
+
+int main()
+{
+	char *foo = "192";
+	int bar = 0;
+	unsigned int sizeOfFoo = 0;
+	for (; foo[sizeOfFoo] != '\0'; ++sizeOfFoo);
+	for (unsigned int index = 0; index < sizeOfFoo; ++index)
+	{
+		bar += (foo[sizeOfFoo - index - 1] - 48) * pow(10, index);
+	}
+	std::cout << bar << std::endl;
 	system("pause");
 }
