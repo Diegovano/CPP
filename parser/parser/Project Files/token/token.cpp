@@ -13,6 +13,11 @@ dString Token::retCont()
 	return tokn;
 }
 
+char operatorToken::retCont()
+{
+	return oprtr;
+}
+
 unsigned int Token::retTokNo()
 {
 	return tokNo;
@@ -46,9 +51,10 @@ char* castIntToCharInt(int ent)
 	dString temp(retDigits(ent));
 	for (unsigned int iter = 0; iter < retDigits(ent); ++iter)
 	{
-		temp.pushBack(ent / pow(10, retDigits(ent) - iter));
-		ent -= ent/pow(10,retDigits())
+		temp.pushBack(char(ent / pow(10, retDigits(ent) - iter)+'0'));
+//		ent -= ent/pow(10,retDigits())
 	}
+	return temp.str;
 }
 
 unsigned int retDigits(unsigned int ent)

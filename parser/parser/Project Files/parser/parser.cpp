@@ -27,11 +27,32 @@ void parser::parse()
 {
 	for (unsigned int iter = 0; iter < oprtrToken.size(); ++iter)
 	{
-		if (oprtrToken[iter]->retPrecedence() == 2)
+		if (oprtrToken[iter]->retPrecedence() == 1)
 		{
-			if (oprtrToken[iter]->retCont == '*')
+			switch (oprtrToken[iter]->retCont())
 			{
-				resTokens.pushBack(new operandToken()
+			case ('*'): std::cout << searchID(oprtrToken[iter]->retTokNo() - 1)->retCont() << ' ' << "Multiply"
+				<< ' ' << searchID(oprtrToken[iter]->retTokNo() + 1)->retCont() << std::endl;
+				break;
+
+			case ('/'): std::cout << searchID(oprtrToken[iter]->retTokNo() - 1)->retCont() << ' ' << "Divide"
+				<< ' ' << searchID(oprtrToken[iter]->retTokNo() + 1)->retCont() << std::endl;
+				break;
+			}
+		}
+	}
+	for (unsigned int iter = 0; iter < oprtrToken.size(); ++iter)
+	{
+		if (oprtrToken[iter]->retPrecedence() == 0)
+		{
+			switch (oprtrToken[iter]->retCont())
+			{
+			case ('+'): std::cout << searchID(oprtrToken[iter]->retTokNo() - 1)->retCont() << ' ' << "Add"
+				<< ' ' << searchID(oprtrToken[iter]->retTokNo() + 1)->retCont() << std::endl;
+				break;
+			case ('-'): std::cout << searchID(oprtrToken[iter]->retTokNo() - 1)->retCont() << ' ' << "Substract"
+				<< ' ' << searchID(oprtrToken[iter]->retTokNo() + 1)->retCont() << std::endl;
+				break;
 			}
 		}
 	}
@@ -44,13 +65,14 @@ Token* parser::searchID(unsigned int searchID)
 	{
 		for (; index < oprdToken.size(); ++index)
 		{
-			if (oprdToken[index]->retTokNo == searchID)return oprdToken[index];
+			if (oprdToken[index]->retTokNo() == searchID)return oprdToken[index];
 		}
 		for (; index - oprdToken.size() < oprtrToken.size(); ++index)
 		{
-			if (oprtrToken[index]->retTokNo == searchID)return oprtrToken[index];
+			if (oprtrToken[index]->retTokNo() == searchID)return oprtrToken[index];
 		}
 	}
+	return nullptr;
 }
 
 dString parser::retStr() 

@@ -21,6 +21,7 @@ public:
 			if (temp[iter] != ' ')entStr.pushBack(temp[iter]);
 		}
 		tokeniseStr();
+		parse();
 	}
 	dString retStr();
 	void printAllTokens();

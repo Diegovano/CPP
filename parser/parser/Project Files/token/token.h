@@ -23,14 +23,17 @@ class operatorToken : public Token
 {
 private:
 	unsigned int precedence;
+	char oprtr;
 public:
 	operatorToken() = default;
 	operatorToken(char tok) : Token::Token(&tok)
 	{
+		oprtr = tok;
 		if (tok == '*' || tok == '/')precedence = 1;
 		else if (tok == '+' || tok == '-')precedence = 0;
 	}
 	unsigned int retPrecedence();
+	virtual char retCont();
 };
 
 class operandToken : public Token 
@@ -56,7 +59,7 @@ public:
 		}
 		dString temp(tok);
 		numOfNumerals = temp.ssize();
-		toknContInt = castCharIntToInt(tokn.str);
+//		toknContInt = castCharIntToInt(tokn.str);
 	}
 	int retNumNumerals();
 };
