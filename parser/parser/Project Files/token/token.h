@@ -8,7 +8,7 @@ protected:
 	unsigned int tokNo;
 	dString tokn;
 	Token() = default;
-	Token(char *entTok) 
+	Token(const char *entTok) 
 	{
 		tokNo = tokQuant++;
 		tokn = entTok;
@@ -26,7 +26,7 @@ private:
 	char oprtr;
 public:
 	operatorToken() = default;
-	operatorToken(char tok) : Token::Token(&tok)
+	operatorToken(const char tok) : Token::Token(&tok)
 	{
 		oprtr = tok;
 		if (tok == '*' || tok == '/')precedence = 1;
@@ -47,7 +47,7 @@ public:
 	{
 
 	}
-	operandToken(char *tok) : Token::Token(tok)
+	operandToken(const char *tok) : Token::Token(tok)
 	{
 		for (unsigned int sizeOfEnt = 0; tokn.str[sizeOfEnt] != '\0'; ++sizeOfEnt)
 		{
@@ -69,7 +69,7 @@ class bracketToken : public Token
 private:
 	dString contOfBrack;
 public:
-	bracketToken(char *tok) : Token::Token(tok) 
+	bracketToken(const char *tok) : Token::Token(tok) 
 	{
 		dString temp(tok);
 		for (unsigned int iter = 1; iter < temp.ssize() - 1; ++iter) 
@@ -78,7 +78,3 @@ public:
 		}
 	}
 };
-
-int castCharIntToInt(char *ent);
-char* castIntToCharInt(int ent);
-unsigned int retDigits(unsigned int ent);

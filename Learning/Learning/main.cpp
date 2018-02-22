@@ -27,7 +27,7 @@ public:
 	const char* returnStr() const;
 	const size_t ssize();
 	static const void dString::getlne(std::istream& is, dString &obj);
-	const char operator[](const size_t loc);
+	char& operator[](const size_t loc);
 	void pushBack(const char *ent);
 	void pushBack(const char ent);
 	const dString& operator+=(dString obj);
@@ -62,8 +62,8 @@ const void dString::getlne(std::istream& is, dString &obj) {
 
 }
 
-const char dString::operator[](const size_t loc) {
-	return this->str[loc];
+char& dString::operator[](const size_t loc) {
+	return str[loc];
 }
 
 void dString::pushBack(const char *ent) {
@@ -141,16 +141,18 @@ unsigned int retDigits(unsigned int ent)
 	return digits;
 }
 
-char* castIntToCharInt(int ent)
+const char* castIntToCharInt(int ent)
 {
-	unsigned int origNumDig = retDigits(ent);
-	char *res = new char[origNumDig];
-	for (unsigned int iter = 0; iter < origNumDig; ++iter)
+	unsigned int numDigits = retDigits(ent);
+	dString res(numDigits);
+	for (unsigned int iter = 0; iter < numDigits; ++iter)
 	{
-		res[iter] = ent / static_cast<int>(pow(10, retDigits(ent) - iter - 1)) + '0';
-		ent -= res[iter] * pow(10, retDigits(ent) - iter - 1);
+		res[numDigits - iter - 1] = char(ent % 10 + '0');
+		ent -= ent % 10;
+		ent /= 10;
 	}
-	return res;
+	std::cout << res << std::endl;
+	return res.returnStr();
 }
 
 int main()

@@ -1,6 +1,2 @@
 ﻿  main.cpp
-d:\program files (x86)\msdev\dev\learning\learning\main.cpp(150): error C2106: '=': left operand must be l-value
-d:\program files (x86)\msdev\dev\learning\learning\main.cpp(151): warning C4244: '-=': conversion from 'double' to 'int', possible loss of data
-d:\program files (x86)\msdev\dev\learning\learning\main.cpp(153): error C2248: 'dString::str': cannot access private member declared in class 'dString'
-  d:\program files (x86)\msdev\dev\learning\learning\main.cpp(6): note: see declaration of 'dString::str'
-  d:\program files (x86)\msdev\dev\learning\learning\main.cpp(4): note: see declaration of 'dString'
+  Learning.vcxproj -> D:\Program Files (x86)\msdev\dev\Learning\Debug\Learning.exe

@@ -121,6 +121,7 @@
   <ItemGroup>
     <ClCompile Include="Dependecies\dStirng\dString.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Project Files\charIntConv\charIntConv.cpp" />
     <ClCompile Include="Project Files\orderedList\orderedList.cpp" />
     <ClCompile Include="Project Files\parser\parser.cpp" />
     <ClCompile Include="Project Files\token\token.cpp" />
@@ -128,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="Dependecies\dStirng\dString.h" />
     <ClInclude Include="Dependecies\vector\vector.h" />
+    <ClInclude Include="Project Files\charIntConv\charIntConv.h" />
     <ClInclude Include="Project Files\orderedList\orderedList.h" />
     <ClInclude Include="Project Files\parser\parser.h" />
     <ClInclude Include="Project Files\token\token.h" />

@@ -19,7 +19,7 @@ const void dString::getlne(std::istream& is, dString &obj)
 
 }
 
-const char dString::operator[](const size_t loc) 
+char& dString::operator[](const size_t loc) 
 {
 	return this->str[loc];
 }

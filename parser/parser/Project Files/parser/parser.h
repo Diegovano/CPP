@@ -6,6 +6,7 @@
 class parser 
 {
 private:
+	double res;
 	dString entStr; //Without spaces
 	vector<operandToken*> oprdToken, resTokens;
 	vector<operatorToken*> oprtrToken;

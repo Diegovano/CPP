@@ -25,7 +25,7 @@ public:
 	}
 	const size_t ssize();
 	static const void dString::getlne(std::istream& is, dString &obj);
-	const char operator[](const size_t loc);
+	char& operator[](const size_t loc);
 	void pushBack(const char *ent);
 	void pushBack(const char ent);
 	const dString& operator+=(dString &obj);

@@ -1,4 +1,5 @@
 #include "parser.h"
+#include"..\charIntConv\charIntConv.h"
 
 void parser::tokeniseStr()
 {
@@ -25,18 +26,32 @@ void parser::tokeniseStr()
 
 void parser::parse()
 {
+	if (resTokens.size() == 1)
+	{
+		res = castCharIntToInt(resTokens[0]->retCont().str);
+		std::cout << res << std::endl;
+		return;
+	}
 	for (unsigned int iter = 0; iter < oprtrToken.size(); ++iter)
 	{
 		if (oprtrToken[iter]->retPrecedence() == 1)
 		{
 			switch (oprtrToken[iter]->retCont())
 			{
-			case ('*'): std::cout << searchID(oprtrToken[iter]->retTokNo() - 1)->retCont() << ' ' << "Multiply"
-				<< ' ' << searchID(oprtrToken[iter]->retTokNo() + 1)->retCont() << std::endl;
+			case ('*'): 
+			{
+				int val1 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str)
+					, val2 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
+				resTokens.pushBack(new operandToken(castIntToCharInt(val1*val2)));
+			}
 				break;
 
-			case ('/'): std::cout << searchID(oprtrToken[iter]->retTokNo() - 1)->retCont() << ' ' << "Divide"
-				<< ' ' << searchID(oprtrToken[iter]->retTokNo() + 1)->retCont() << std::endl;
+			case ('/'): 
+			{
+				int val1 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str)
+					, val2 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
+				resTokens.pushBack(new operandToken(castIntToCharInt(val1/val2)));
+			}
 				break;
 			}
 		}
@@ -47,11 +62,19 @@ void parser::parse()
 		{
 			switch (oprtrToken[iter]->retCont())
 			{
-			case ('+'): std::cout << searchID(oprtrToken[iter]->retTokNo() - 1)->retCont() << ' ' << "Add"
-				<< ' ' << searchID(oprtrToken[iter]->retTokNo() + 1)->retCont() << std::endl;
+			case ('+'): 
+			{
+				int val1 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str)
+					, val2 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
+				resTokens.pushBack(new operandToken(castIntToCharInt(val1+val2)));
+			}
 				break;
-			case ('-'): std::cout << searchID(oprtrToken[iter]->retTokNo() - 1)->retCont() << ' ' << "Substract"
-				<< ' ' << searchID(oprtrToken[iter]->retTokNo() + 1)->retCont() << std::endl;
+			case ('-'): 
+			{
+				int val1 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str)
+					, val2 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
+				resTokens.pushBack(new operandToken(castIntToCharInt(val1-val2)));
+			}
 				break;
 			}
 		}
