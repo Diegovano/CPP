@@ -24,9 +24,6 @@
     <ClCompile Include="main.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="Project Files\orderedList\orderedList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Project Files\parser\parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -38,9 +35,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Project Files\orderedList\orderedList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Project Files\parser\parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>

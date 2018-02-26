@@ -4,8 +4,6 @@
 class Token 
 {
 protected:
-	static unsigned int tokQuant;
-	unsigned int tokNo;
 	dString tokn;
 	Token() = default;
 	Token(const char *entTok) 
@@ -14,6 +12,9 @@ protected:
 		tokn = entTok;
 	}
 public:
+	static unsigned int tokQuant;
+	unsigned int tokNo;
+	void chgTok(const char* ent);
 	dString retCont();
 	unsigned int retTokNo();
 	static unsigned int retTokQuant();

@@ -14,7 +14,7 @@ int castCharIntToInt(char *ent)
 	return conv;
 }
 
-const char* castIntToCharInt(int ent)
+char* castIntToCharInt(int ent) 
 {
 	unsigned int numDigits = retDigits(ent);
 	dString res(numDigits);

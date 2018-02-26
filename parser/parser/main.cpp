@@ -7,7 +7,7 @@ int main() {
 		dString entered;
 		dString::getlne(std::cin, entered);
 		parser parse(entered.str);
-//		parse.printAllTokens();
+		parse.printAllTokens();
 		system("pause");
 		return 0;
 	}

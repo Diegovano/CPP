@@ -12,6 +12,7 @@ private:
 	vector<operatorToken*> oprtrToken;
 	void tokeniseStr();
 	void parse();
+	void resolveToken(Token *tok);
 	Token* searchID(unsigned int searchID);
 public:
 	parser(char *ent) 
@@ -23,6 +24,7 @@ public:
 		}
 		tokeniseStr();
 		parse();
+//		resolveToken(oprdToken[0]);
 	}
 	dString retStr();
 	void printAllTokens();

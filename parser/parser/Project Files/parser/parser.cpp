@@ -26,7 +26,31 @@ void parser::tokeniseStr()
 
 void parser::parse()
 {
-	if (resTokens.size() == 1)
+	for (unsigned int iter = 0; iter < oprtrToken.size(); ++iter)
+	{
+		for (unsigned int iter2 = 0; iter2 < oprtrToken.size(); ++iter2)
+		{
+			switch (oprtrToken[iter]->retCont())
+			{
+			case('*'):
+			{
+				int res = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str) *
+					castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
+				searchID(oprtrToken[iter]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
+				resolveToken(searchID(oprtrToken[iter]->retTokNo()-1));
+			}
+				break;
+			case('/'):
+			{
+				int res = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str) *
+					castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
+				searchID(oprtrToken[iter]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
+			}
+				break;
+			}
+		}
+	}
+/*	if (resTokens.size() == 1)
 	{
 		res = castCharIntToInt(resTokens[0]->retCont().str);
 		std::cout << res << std::endl;
@@ -78,22 +102,35 @@ void parser::parse()
 				break;
 			}
 		}
+	}*/
+}
+
+void parser::resolveToken(Token *tok)
+{
+//	delete searchID(tok->retTokNo() + 1);
+//	delete searchID(tok->retTokNo() + 2);
+	if (Token::retTokQuant() == 3)
+	{
+		Token::tokQuant = 1;
+		return;
+	}
+	for (unsigned int iter = 1; iter < Token::retTokQuant() - tok->retTokNo(); ++iter) //For loop iterates too many times
+	{
+		searchID(tok->retTokNo() + 2 + iter)->tokNo = tok->retTokNo() + 1 + iter;
+		Token::tokQuant--;
 	}
 }
 
 Token* parser::searchID(unsigned int searchID)
 {
-	if (searchID > Token::retTokQuant())throw std::exception("There is no token with that identifier!");
-	for (unsigned int index = 0; index < Token::retTokQuant();)
+	if (searchID > Token::retTokQuant() - 1)throw std::exception("There is no token with that identifier!");
+	for (unsigned int index = 0; index < oprdToken.size(); ++index)
 	{
-		for (; index < oprdToken.size(); ++index)
-		{
-			if (oprdToken[index]->retTokNo() == searchID)return oprdToken[index];
-		}
-		for (; index - oprdToken.size() < oprtrToken.size(); ++index)
-		{
-			if (oprtrToken[index]->retTokNo() == searchID)return oprtrToken[index];
-		}
+		if (oprdToken[index]->retTokNo() == searchID)return oprdToken[index];
+	}
+	for (unsigned int index = 0; index < oprtrToken.size(); ++index)
+	{
+		if (oprtrToken[index]->retTokNo() == searchID)return oprtrToken[index];
 	}
 	return nullptr;
 }

@@ -8,6 +8,12 @@ int operandToken::retNumNumerals()
 {
 	return numOfNumerals;
 }
+
+void Token::chgTok(const char *ent)
+{
+	tokn = ent;
+}
+
 dString Token::retCont()
 {
 	return tokn;
