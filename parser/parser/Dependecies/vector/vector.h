@@ -45,7 +45,16 @@ public:
 	}
 	_SType operator[](unsigned int index)
 	{
-		if (index > vecSize) throw std::runtime_error("[] Operator: Trying to access a non existing element. Subscript out of range");
+		if (index > vecSize) throw std::runtime_error("[] Operator: Trying to access a non-existing element. Subscript out of range");
 		return arr[index];
+	}
+	void remove(unsigned int index)
+	{
+		if (index > vecSize) throw std::runtime_error("Remove: Trying to delete a non-existing element!");
+		for (unsigned int iter = index; iter < vecSize; ++iter)
+		{
+			arr[iter] = arr[iter + 1];
+		}
+		vecSize--;
 	}
 };

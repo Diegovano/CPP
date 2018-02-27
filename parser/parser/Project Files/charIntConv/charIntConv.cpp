@@ -24,7 +24,6 @@ char* castIntToCharInt(int ent)
 		ent -= ent % 10;
 		ent /= 10;
 	}
-	std::cout << res << std::endl;
 	return res.str;
 }
 unsigned int retDigits(unsigned int ent)

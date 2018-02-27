@@ -26,104 +26,72 @@ void parser::tokeniseStr()
 
 void parser::parse()
 {
-	for (unsigned int iter = 0; iter < oprtrToken.size(); ++iter)
+	for (unsigned int iter2 = 0; iter2 < oprtrToken.size(); ++iter2)
 	{
-		for (unsigned int iter2 = 0; iter2 < oprtrToken.size(); ++iter2)
+		switch (oprtrToken[iter2]->retCont())
 		{
-			switch (oprtrToken[iter]->retCont())
-			{
-			case('*'):
-			{
-				int res = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str) *
-					castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
-				searchID(oprtrToken[iter]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
-				resolveToken(searchID(oprtrToken[iter]->retTokNo()-1));
-			}
-				break;
-			case('/'):
-			{
-				int res = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str) *
-					castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
-				searchID(oprtrToken[iter]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
-			}
-				break;
-			}
+		case('*'):
+		{
+			int res = castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() - 1)->retCont().str) *
+				castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() + 1)->retCont().str);
+			searchID(oprtrToken[iter2]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
+			resolveToken(searchID(oprtrToken[iter2]->retTokNo() - 1));
+			break;
+		}
+		case('/'):
+		{
+			int res = castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() - 1)->retCont().str) /
+				castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() + 1)->retCont().str);
+			searchID(oprtrToken[iter2]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
+			resolveToken(searchID(oprtrToken[iter2]->retTokNo() - 1));
+			break;
+		}
 		}
 	}
-/*	if (resTokens.size() == 1)
+	for (unsigned int iter2 = 0; iter2 < oprtrToken.size(); ++iter2)
 	{
-		res = castCharIntToInt(resTokens[0]->retCont().str);
-		std::cout << res << std::endl;
-		return;
-	}
-	for (unsigned int iter = 0; iter < oprtrToken.size(); ++iter)
-	{
-		if (oprtrToken[iter]->retPrecedence() == 1)
+		switch (oprtrToken[iter2]->retCont())
 		{
-			switch (oprtrToken[iter]->retCont())
-			{
-			case ('*'): 
-			{
-				int val1 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str)
-					, val2 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
-				resTokens.pushBack(new operandToken(castIntToCharInt(val1*val2)));
-			}
-				break;
-
-			case ('/'): 
-			{
-				int val1 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str)
-					, val2 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
-				resTokens.pushBack(new operandToken(castIntToCharInt(val1/val2)));
-			}
-				break;
-			}
+		case('+'):
+		{
+			int res = castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() - 1)->retCont().str) +
+				castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() + 1)->retCont().str);
+			searchID(oprtrToken[iter2]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
+			resolveToken(searchID(oprtrToken[iter2]->retTokNo() - 1));
+			break;
+		}
+		case('-'):
+		{
+			int res = castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() - 1)->retCont().str) -
+				castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() + 1)->retCont().str);
+			searchID(oprtrToken[iter2]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
+			resolveToken(searchID(oprtrToken[iter2]->retTokNo() - 1));
+			break;
+		}
 		}
 	}
-	for (unsigned int iter = 0; iter < oprtrToken.size(); ++iter)
-	{
-		if (oprtrToken[iter]->retPrecedence() == 0)
-		{
-			switch (oprtrToken[iter]->retCont())
-			{
-			case ('+'): 
-			{
-				int val1 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str)
-					, val2 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
-				resTokens.pushBack(new operandToken(castIntToCharInt(val1+val2)));
-			}
-				break;
-			case ('-'): 
-			{
-				int val1 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str)
-					, val2 = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
-				resTokens.pushBack(new operandToken(castIntToCharInt(val1-val2)));
-			}
-				break;
-			}
-		}
-	}*/
 }
 
 void parser::resolveToken(Token *tok)
 {
-//	delete searchID(tok->retTokNo() + 1);
-//	delete searchID(tok->retTokNo() + 2);
+//	delete searchID(tok->retTokNo() + 1), searchID(tok->retTokNo() + 2);
+//	oprtrToken.remove();//where are the tokens located in their respective arrays??
+//	oprdToken.remove(); 
 	if (Token::retTokQuant() == 3)
 	{
 		Token::tokQuant = 1;
 		return;
 	}
-	for (unsigned int iter = 1; iter < Token::retTokQuant() - tok->retTokNo(); ++iter) //For loop iterates too many times
+	for (unsigned int iter = tok->retTokNo() + 3; iter < Token::retTokQuant() - 1; ++iter)
 	{
-		searchID(tok->retTokNo() + 2 + iter)->tokNo = tok->retTokNo() + 1 + iter;
-		Token::tokQuant--;
+		searchID(iter)->tokNo = iter - 2;
 	}
+	Token::tokQuant -= 2;
 }
 
 Token* parser::searchID(unsigned int searchID)
 {
-	if (searchID > Token::retTokQuant() - 1)throw std::exception("There is no token with that identifier!");
+	if (searchID > Token::retTokQuant() - 1)throw std::exception("There is no token with that identifier! SearchID...");
 	for (unsigned int index = 0; index < oprdToken.size(); ++index)
 	{
 		if (oprdToken[index]->retTokNo() == searchID)return oprdToken[index];
@@ -152,6 +120,11 @@ void parser::printAllTokens()
 	{
 		std::cout << oprtrToken[iter]->retCont() << " Token Number is: " << oprtrToken[iter]->retTokNo() << std::endl;
 	}
+}
+
+void parser::printRes()
+{
+	std::cout << castCharIntToInt(oprdToken[0]->retCont().str) << std::endl;
 }
 
 bool isCharOperator(char ent)

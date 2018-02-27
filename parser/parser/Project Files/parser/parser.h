@@ -24,10 +24,10 @@ public:
 		}
 		tokeniseStr();
 		parse();
-//		resolveToken(oprdToken[0]);
 	}
 	dString retStr();
 	void printAllTokens();
+	void printRes();
 };
 
 bool isCharOperator(char ent);

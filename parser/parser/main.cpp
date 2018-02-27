@@ -4,10 +4,12 @@
 int main() {
 	try
 	{
-		dString entered;
+/*		dString entered;
 		dString::getlne(std::cin, entered);
-		parser parse(entered.str);
+		parser parse(entered.str);*/
+		parser parse("12*5+3");
 		parse.printAllTokens();
+		parse.printRes();
 		system("pause");
 		return 0;
 	}
