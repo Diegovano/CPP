@@ -8,7 +8,7 @@ void parser::tokeniseStr()
 		if (isCharOperator(entStr[iter]) && isCharOperator(entStr[iter + 1]))
 		{
 			std::cout << "'" << entStr[iter] << "' and '" << entStr[iter + 1] << "'" << std::endl;
-			throw std::exception("Math Error, cannot have two operators in succession!");
+			throw std::exception("parser: tokeniseStr(): Math Error, cannot have two operators in succession!");
 		}
 	}
 	for (size_t iter = 0; iter < entStr.ssize(); ++iter)
@@ -26,57 +26,58 @@ void parser::tokeniseStr()
 
 void parser::parse()
 {
-	for (unsigned int iter2 = 0; iter2 < oprtrToken.size(); ++iter2)
+	for (unsigned int iter = 0; iter < oprtrToken.size(); ++iter)
 	{
-		switch (oprtrToken[iter2]->retCont())
+		switch (oprtrToken[iter]->retCont())
 		{
 		case('*'):
 		{
-			int res = castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() - 1)->retCont().str) *
-				castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() + 1)->retCont().str);
-			searchID(oprtrToken[iter2]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
-			resolveToken(searchID(oprtrToken[iter2]->retTokNo() - 1));
+			int res = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str) *
+				castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
+			searchID(oprtrToken[iter]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
+			resolveToken(searchID(oprtrToken[iter]->retTokNo() - 1), iter);
 			break;
 		}
 		case('/'):
 		{
-			int res = castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() - 1)->retCont().str) /
-				castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() + 1)->retCont().str);
-			searchID(oprtrToken[iter2]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
-			resolveToken(searchID(oprtrToken[iter2]->retTokNo() - 1));
+			int res = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str) /
+				castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
+			searchID(oprtrToken[iter]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
+			resolveToken(searchID(oprtrToken[iter]->retTokNo() - 1), iter);
 			break;
 		}
 		}
 	}
-	for (unsigned int iter2 = 0; iter2 < oprtrToken.size(); ++iter2)
+	for (unsigned int iter = 0; iter < oprtrToken.size(); ++iter)
 	{
-		switch (oprtrToken[iter2]->retCont())
+		switch (oprtrToken[iter]->retCont())
 		{
 		case('+'):
 		{
-			int res = castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() - 1)->retCont().str) +
-				castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() + 1)->retCont().str);
-			searchID(oprtrToken[iter2]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
-			resolveToken(searchID(oprtrToken[iter2]->retTokNo() - 1));
+			int res = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str) +
+				castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
+			searchID(oprtrToken[iter]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
+			resolveToken(searchID(oprtrToken[iter]->retTokNo() - 1), iter);
 			break;
 		}
 		case('-'):
 		{
-			int res = castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() - 1)->retCont().str) -
-				castCharIntToInt(searchID(oprtrToken[iter2]->retTokNo() + 1)->retCont().str);
-			searchID(oprtrToken[iter2]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
-			resolveToken(searchID(oprtrToken[iter2]->retTokNo() - 1));
+			int res = castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() - 1)->retCont().str) -
+				castCharIntToInt(searchID(oprtrToken[iter]->retTokNo() + 1)->retCont().str);
+			searchID(oprtrToken[iter]->retTokNo() - 1)->chgTok(castIntToCharInt(res));
+			resolveToken(searchID(oprtrToken[iter]->retTokNo() - 1), iter);
 			break;
 		}
 		}
 	}
 }
 
-void parser::resolveToken(Token *tok)
+void parser::resolveToken(Token *tok, const unsigned int &indexOfTok)
 {
-//	delete searchID(tok->retTokNo() + 1), searchID(tok->retTokNo() + 2);
-//	oprtrToken.remove();//where are the tokens located in their respective arrays??
-//	oprdToken.remove(); 
+	delete searchID(tok->retTokNo() + 1);
+	delete searchID(tok->retTokNo() + 2);
+	oprtrToken.remove(indexOfTok);
+//	oprdToken.remove()
 	if (Token::retTokQuant() == 3)
 	{
 		Token::tokQuant = 1;
@@ -91,7 +92,7 @@ void parser::resolveToken(Token *tok)
 
 Token* parser::searchID(unsigned int searchID)
 {
-	if (searchID > Token::retTokQuant() - 1)throw std::exception("There is no token with that identifier! SearchID...");
+	if (searchID > Token::retTokQuant() - 1)throw std::exception("parser: searchID(unsigned int searchID): There is no token with that identifier!");
 	for (unsigned int index = 0; index < oprdToken.size(); ++index)
 	{
 		if (oprdToken[index]->retTokNo() == searchID)return oprdToken[index];

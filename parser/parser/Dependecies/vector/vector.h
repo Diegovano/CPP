@@ -45,16 +45,23 @@ public:
 	}
 	_SType operator[](unsigned int index)
 	{
-		if (index > vecSize) throw std::runtime_error("[] Operator: Trying to access a non-existing element. Subscript out of range");
+		if (index > vecSize) throw std::runtime_error("Vector: operator[]: Trying to access a non-existing element. Subscript out of range");
 		return arr[index];
 	}
 	void remove(unsigned int index)
 	{
-		if (index > vecSize) throw std::runtime_error("Remove: Trying to delete a non-existing element!");
-		for (unsigned int iter = index; iter < vecSize; ++iter)
-		{
-			arr[iter] = arr[iter + 1];
-		}
+		if (index > vecSize) throw std::runtime_error("Vector: remove(unsigned int index): Trying to delete a non-existing element!");
+		delete[] arr[index];
+		for (unsigned int iter = index; iter < vecSize; ++iter)	arr[iter] = arr[iter + 1];
 		vecSize--;
+	}
+	void removeItem(_SType item)
+	{
+		for (unsigned int iter = 0; iter < vecSize; ++iter) if (arr[iter] == item) remove(iter);
+		throw std::runtime_error("Vector: removeItem(_SType item): That item does not exist in this vector!");
+	}
+	void searchToken(Token *item)
+	{
+
 	}
 };

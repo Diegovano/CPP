@@ -8,11 +8,11 @@ class parser
 private:
 	double res;
 	dString entStr; //Without spaces
-	vector<operandToken*> oprdToken, resTokens;
+	vector<operandToken*> oprdToken;
 	vector<operatorToken*> oprtrToken;
 	void tokeniseStr();
 	void parse();
-	void resolveToken(Token *tok);
+	void resolveToken(Token *tok, const unsigned int &indexOfTok);
 	Token* searchID(unsigned int searchID);
 public:
 	parser(char *ent) 

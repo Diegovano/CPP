@@ -55,7 +55,7 @@ public:
 			if (tokn.str[sizeOfEnt] - 48 < 0 || tokn.str[sizeOfEnt] - 48 > 9) 
 			{
 				std::cout << "'" << tokn.str[sizeOfEnt] << "'" << std::endl;
-				throw std::runtime_error("Invalid Character present! Cannot convert to numbers!");
+				throw std::runtime_error("operandToken Constr: Invalid Character present! Cannot convert to numbers!");
 			}
 		}
 		dString temp(tok);
