@@ -60,8 +60,11 @@ public:
 		for (unsigned int iter = 0; iter < vecSize; ++iter) if (arr[iter] == item) remove(iter);
 		throw std::runtime_error("Vector: removeItem(_SType item): That item does not exist in this vector!");
 	}
-	void searchToken(Token *item)
+	void removeTok(void *ptr)
 	{
-
+		for (unsigned int index = 0; index < vecSize; ++index)
+		{
+			if (arr[index] == ptr) remove(index);
+		}
 	}
 };

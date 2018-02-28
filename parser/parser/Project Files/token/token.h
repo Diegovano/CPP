@@ -12,6 +12,10 @@ protected:
 		tokn = entTok;
 	}
 public:
+	virtual ~Token()
+	{
+		tokQuant--;
+	}
 	static unsigned int tokQuant;
 	unsigned int tokNo;
 	void chgTok(const char* ent);
