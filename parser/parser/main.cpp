@@ -2,13 +2,13 @@
 #include "Project Files\parser\parser.h"
 
 int main() {
-	try
+BEGIN:	try
 	{
-/*		dString entered;
+		dString entered;
 		dString::getlne(std::cin, entered);
-		parser parse(entered.str);*/
-		parser parse("12*5+3");
-		parse.printAllTokens();
+		parser parse(entered.str);
+//		parser parse("12*5+5");
+//		parse.printAllTokens();
 		parse.printRes();
 		system("pause");
 		return 0;
@@ -17,5 +17,6 @@ int main() {
 	{
 		std::cout << err.what() << std::endl;
 		system("pause");
+		goto BEGIN;
 	}
 }

@@ -74,19 +74,14 @@ void parser::parse()
 
 void parser::resolveToken(Token *tok, const unsigned int &indexOfTok)
 {
-	if (Token::retTokQuant() == 3)
+	Token *oprtr = searchID(tok->retTokNo() + 1), *oprd = searchID(tok->retTokNo() + 2);
+	for (unsigned int iter = 0; iter < Token::retTokQuant() - tok->retTokNo() - 3; ++iter) //-3 because -2 to skip two delete tokens -1 for diff btwn tokquant and toknos
 	{
-		Token::tokQuant = 1;
-		return;
+		searchID(tok->retTokNo() + iter + 3)->tokNo = tok->retTokNo() + iter + 1;
 	}
-	oprtrToken.remove(indexOfTok);
-	oprdToken.removeTok(searchID(tok->retTokNo() + 2));
-	delete searchID(tok->retTokNo() + 1);
-	delete searchID(tok->retTokNo() + 2);
-	for (unsigned int iter = 0; iter < Token::retTokQuant() - tok->retTokNo() - 1; ++iter)
-	{
-		searchID(tok->retTokNo() + 3 + iter)->tokNo = tok->retTokNo() + iter + 1;
-	}
+	oprtrToken.removeTok(oprtr);
+	oprdToken.removeTok(oprd);
+//	delete oprtr, oprd;
 }
 
 Token* parser::searchID(unsigned int searchID)
