@@ -15,7 +15,7 @@ int main() {
 		std::cin >> mainInput;
 		std::cin.ignore();
 		if (mainInput != 1 && mainInput != 2 && mainInput != 3) {
-			std::cout << "What you entered wasn't one of the options proposed to you above. Please restart the program.\n";
+			std::cout << "What you entered wasn't one of the options proposed to you above.\n";
 		}
 		else if (mainInput == 1) {
 			selection = false;
@@ -60,6 +60,7 @@ int txtTobin() {
 		for (int i2 = 7; i2 >= 0; i2--) {
 			std::cout << (ascii >> i2) % 2;
 		}
+		std::cout << ' ';
 	}
 	std::cout << std::endl;
 
