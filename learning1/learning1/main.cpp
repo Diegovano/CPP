@@ -1,45 +1,52 @@
 #include <iostream>
-#include <string>
 
-using namespace std;
-
-struct swimmingPool
+class TimeStore
 {
-private:
-	unsigned int length, width, depth;
-	double pricePerM2;
+	unsigned int seconds, minutes, hours;
 public:
-	swimmingPool(unsigned int z, unsigned int y, unsigned int x, double price)
+	TimeStore(unsigned int hrEnt, unsigned int minEnt, unsigned int secEnt) : hours(hrEnt), minutes(minEnt), seconds(secEnt)
 	{
-		length = z; width = y; depth = x; pricePerM2 = price;
 	}
-	void printDimentions()
+	TimeStore() : seconds(0), minutes(0), hours(0)
 	{
-		cout << "Length: " << length << endl
-			<< "Width: " << width << endl
-			<< "Depth: " << depth << endl;
 	}
-	double printPriceOfLand()
+
+	void addSec(unsigned int secAdd)
 	{
-		return getVolume() * pricePerM2;
+		seconds += secAdd;
+		while (seconds > 59)
+		{
+			addMin(1);
+			seconds -= 60;
+		}
 	}
-	double getVolume()
+	void addMin(unsigned int minAdd)
 	{
-		return length * width * depth;
+		minutes += minAdd;
+		while (minutes > 59)
+		{
+			addHr(1);
+			minutes -= 60;
+		}
 	}
-	void operator+(unsigned int incrSize)
+	void addHr(unsigned int hrAdd)
 	{
-		length += incrSize;
+		hours += hrAdd;
+	}
+	void printTimeCont()
+	{
+		if (hours != 0) std::cout << hours << " Hours, " << minutes << " Minutes and " << seconds << " Seconds." << std::endl;
+		else if (minutes != 0) std::cout << minutes << " Minutes and " << seconds << " Seconds." << std::endl;
+		else if (seconds != 0) std::cout << seconds << " Seconds." << std::endl;
+		else std::cout << "Nothing." << std::endl;
 	}
 };
 
 int main()
 {
-	swimmingPool JacobPool(10, 5, 3, 100);
-	JacobPool.printDimentions();
-	cout << JacobPool.printPriceOfLand() << endl;
-	JacobPool + 5;
-	JacobPool.printDimentions();
+	TimeStore tmr1(0, 0, 58);
+	tmr1.addSec(1);
+	tmr1.printTimeCont();
 	system("pause");
 	return 0;
 }
