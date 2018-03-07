@@ -26,6 +26,12 @@ char* castIntToCharInt(int ent)
 	}
 	return res.str;
 }
+
+char* castNumToCharNum(float ent)
+{
+
+}
+
 unsigned int retDigits(unsigned int ent)
 {
 	unsigned int digits = 0;

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Project Files">
+      <UniqueIdentifier>{45943eb8-de8a-40ee-959f-f34b4e841d8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Token">
+      <UniqueIdentifier>{5691b5a4-3efb-4e16-8a75-79e2276a27a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project Files\Parser">
+      <UniqueIdentifier>{d91b1a8a-2e02-4a01-af54-c0e44a326aac}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Project Files\Token\Token.cpp">
+      <Filter>Project Files\Token</Filter>
+    </ClCompile>
+    <ClCompile Include="Project Files\Parser\Parser.cpp">
+      <Filter>Project Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Project Files\Parser\Parser.h">
+      <Filter>Project Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Project Files\Token\Token.h">
+      <Filter>Project Files\Token</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
