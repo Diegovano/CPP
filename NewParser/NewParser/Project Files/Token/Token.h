@@ -10,12 +10,13 @@ protected:
 	{
 	}
 
-	virtual double retCont();
 	double charPtrDouble(const char *ent);
 public:
 	virtual ~Token()
 	{
 	}
+
+	virtual double retCont();
 };
 
 class OprtrToken : public Token
@@ -25,10 +26,13 @@ class OprtrToken : public Token
 public:
 	OprtrToken(const char entTok) : m_oprtr(entTok), Token(charPtrDouble(&entTok))
 	{
-		if (m_oprtr != '*' || m_oprtr != '/' || m_oprtr != '+' || m_oprtr != '-') throw std::runtime_error("OprtrToken() : Invalid Operator!");
+		if (m_oprtr != '*' && m_oprtr != '/' && m_oprtr != '+' && m_oprtr != '-') throw std::runtime_error("OprtrToken() : Invalid Operator!");
 		if (m_oprtr == '*' || m_oprtr == '/')preced = 2;
 		else preced = 1;
 	}
+
+	unsigned int retPreced();
+
 };
 
 class OprdToken : public Token

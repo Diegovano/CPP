@@ -48,6 +48,11 @@ double Token::charPtrDouble(const char *ent)
 	return convInt + convDbl;
 }
 
+unsigned int OprtrToken::retPreced()
+{
+	return preced;
+}
+
 unsigned int OprdToken::retDigits(int ent)
 {
 	unsigned int digCount = 0;
