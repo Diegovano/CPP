@@ -16,6 +16,7 @@ public:
 	{
 	}
 
+	unsigned int tokNo();
 	virtual double retCont();
 };
 

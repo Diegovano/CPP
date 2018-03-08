@@ -3,6 +3,11 @@
 
 int Token::m_tokenQuant = 0;
 
+unsigned int Token::tokNo()
+{
+	return m_tokenNo;
+}
+
 double Token::retCont()
 {
 	return m_tokn;
