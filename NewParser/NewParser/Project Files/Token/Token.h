@@ -24,7 +24,7 @@ class OprtrToken : public Token
 	char m_oprtr;
 	unsigned int preced;
 public:
-	OprtrToken(const char entTok) : m_oprtr(entTok), Token(charPtrDouble(&entTok))
+	OprtrToken(const char entTok) : m_oprtr(entTok), Token(charPtrDouble(&entTok) + '0')
 	{
 		if (m_oprtr != '*' && m_oprtr != '/' && m_oprtr != '+' && m_oprtr != '-') throw std::runtime_error("OprtrToken() : Invalid Operator!");
 		if (m_oprtr == '*' || m_oprtr == '/')preced = 2;
