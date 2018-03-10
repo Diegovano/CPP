@@ -1,23 +1,28 @@
 #pragma once
+#include <iostream>
 
 class Token
 {
-	double m_tokn;
-	unsigned int m_tokenNo;
-	static int m_tokenQuant;
 protected:
 	Token(double entTok) : m_tokn(entTok), m_tokenNo(++m_tokenQuant)
 	{
 	}
 
+	double m_tokn;
+	unsigned int m_tokenNo;
+	static int m_tokenQuant;
 	double charPtrDouble(const char *ent);
 public:
 	virtual ~Token()
 	{
+		m_tokenQuant--;
 	}
+
+	static unsigned int tokQuant();
 
 	unsigned int tokNo();
 	virtual double retCont();
+	void chgTokNo(unsigned int chgTokNo);
 };
 
 class OprtrToken : public Token
@@ -47,6 +52,8 @@ public:
 	OprdToken(const char *entTok) : m_oprd(charPtrDouble(entTok)), Token(charPtrDouble(entTok))
 	{
 	}
+
+	void chgTokCont(double chgdTok);
 };
 
 class BrackToken : public Token

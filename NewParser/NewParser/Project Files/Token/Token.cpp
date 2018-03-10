@@ -1,7 +1,11 @@
-#include <iostream>
 #include "Token.h"
 
 int Token::m_tokenQuant = 0;
+
+unsigned int Token::tokQuant()
+{
+	return m_tokenQuant;
+}
 
 unsigned int Token::tokNo()
 {
@@ -12,6 +16,12 @@ double Token::retCont()
 {
 	return m_tokn;
 }
+
+void Token::chgTokNo(unsigned int chgTokNo)
+{
+	m_tokenNo = chgTokNo;
+}
+
 
 double Token::charPtrDouble(const char *ent)
 {
@@ -68,4 +78,10 @@ unsigned int OprdToken::retDigits(int ent)
 		digCount++;
 	}
 	return digCount;
+}
+
+void OprdToken::chgTokCont(double chgdTok)
+{
+	m_oprd = chgdTok;
+	m_tokn = chgdTok;
 }

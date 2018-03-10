@@ -1,14 +1,13 @@
 #include <iostream>
-#include "Project Files\Token\Token.h"
+#include <string>
+#include "Project Files\Parser\Parser.h"
 
 int main()
 {
-	OprdToken pi("3.1415");
-	OprdToken e(2.71828);
-	OprtrToken oprtr1('*');
-	std::cout << pi.retCont() << ' ' << pi.tokNo() << std::endl;
-	std::cout << (char)oprtr1.retCont() << ' ' << oprtr1.tokNo() << std::endl;
-	std::cout << e.retCont() << ' ' << e.tokNo() << std::endl;
+	std::string ent;
+	std::getline(std::cin, ent);
+	Parser parse(ent.c_str());
+	std::cout << parse.getRes() << std::endl;
 	system("pause");
 	return 0;
 }
