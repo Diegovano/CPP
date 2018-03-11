@@ -16,6 +16,7 @@ public:
 	virtual ~Token()
 	{
 		m_tokenQuant--;
+//		std::cout << "Destructor called!" << std::endl;
 	}
 
 	static unsigned int tokQuant();

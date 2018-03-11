@@ -65,58 +65,69 @@ void Parser::printTokens()
 
 void Parser::parse()
 {
-	for (unsigned int iter = 0; iter < m_oprtrToken.size(); iter++)
+	while (Token::tokQuant() != 1)
 	{
-		switch ((char)m_oprtrToken[iter]->retCont())
+		for (unsigned int iter = 0; iter < m_oprtrToken.size(); iter++)
 		{
-		case('*'):
-			res = searchOprd(m_oprtrToken[iter]->tokNo() - 1)->retCont() * searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont();
-			resolve(searchOprd(m_oprtrToken[iter]->tokNo() - 1), res);
-			break;
-		case('/'):
-			if (searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont() == 0)
+			switch ((char)m_oprtrToken[iter]->retCont())
 			{
-				std::cerr << __FUNCTION__ << ": at line " << __LINE__ << ": Cannot Divide by 0!" << std::endl;
-				system("pause");
+			case('*'):
+				res = searchOprd(m_oprtrToken[iter]->tokNo() - 1)->retCont() * searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont();
+				resolve(searchOprd(m_oprtrToken[iter]->tokNo() - 1), res);
+				iter = 0;
+				break;
+			case('/'):
+				if (searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont() == 0)
+				{
+					std::cerr << __FUNCTION__ << ": at line " << __LINE__ << ": Cannot Divide by 0!" << std::endl;
+					system("pause");
+					break;
+				}
+				res = searchOprd(m_oprtrToken[iter]->tokNo() - 1)->retCont() / searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont();
+				resolve(searchOprd(m_oprtrToken[iter]->tokNo() - 1), res);
+				iter = 0;
 				break;
 			}
-			res = searchOprd(m_oprtrToken[iter]->tokNo() - 1)->retCont() / searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont();
-			resolve(searchOprd(m_oprtrToken[iter]->tokNo() - 1), res);
-			break;
 		}
-	}
-	for (unsigned int iter = 0; iter < m_oprtrToken.size(); iter++)
-	{
-		switch ((char)m_oprtrToken[iter]->retCont())
+		for (unsigned int iter = 0; iter < m_oprtrToken.size(); iter++)
 		{
-		case('+'):
-			res = searchOprd(m_oprtrToken[iter]->tokNo() - 1)->retCont() + searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont();
-			resolve(searchOprd(m_oprtrToken[iter]->tokNo() - 1), res);
-			break;
-		case('-'):
-			res = searchOprd(m_oprtrToken[iter]->tokNo() - 1)->retCont() - searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont();
-			resolve(searchOprd(m_oprtrToken[iter]->tokNo() - 1), res);
-			break;
+			switch ((char)m_oprtrToken[iter]->retCont())
+			{
+			case('+'):
+				res = searchOprd(m_oprtrToken[iter]->tokNo() - 1)->retCont() + searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont();
+				resolve(searchOprd(m_oprtrToken[iter]->tokNo() - 1), res);
+				iter = 0;
+				break;
+			case('-'):
+				res = searchOprd(m_oprtrToken[iter]->tokNo() - 1)->retCont() - searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont();
+				resolve(searchOprd(m_oprtrToken[iter]->tokNo() - 1), res);
+				iter = 0;
+				break;
+			}
 		}
 	}
 }
 
 void Parser::resolve(OprdToken* lhOprd, double res)
 {
+	Token *oprtr = searchOprtr(lhOprd->tokNo() + 1), *oprd = searchOprd(lhOprd->tokNo() + 2);
 	m_oprtrToken.erase(m_oprtrToken.begin() + retIndexOprtrVec(searchOprtr(lhOprd->tokNo() + 1)));
 	m_oprdToken.erase(m_oprdToken.begin() + retIndexOprdVec(searchOprd(lhOprd->tokNo() + 2)));
+	delete oprtr;
+	delete oprd;
 	lhOprd->chgTokCont(res);
-	for (unsigned int iter = 3; iter <= Token::tokQuant()-lhOprd->tokNo(); ++iter)
+	for (unsigned int iter = 0; iter < Token::tokQuant() - lhOprd->tokNo(); ++iter)
 	{
-		searchFor(lhOprd->tokNo() + iter + 3)->chgTokNo(lhOprd->tokNo() + iter);
+		searchFor(iter + 3 + lhOprd->tokNo())->chgTokNo(iter + lhOprd->tokNo() + 1);
 	}
+	printTokens();
 }
 
 Token* Parser::searchFor(unsigned int searchFor)
 {
 	for (unsigned int iter = 0; iter < m_oprdToken.size(); iter++) if (m_oprdToken[iter]->tokNo() == searchFor) return m_oprdToken[iter];
 	for (unsigned int iter = 0; iter < m_oprtrToken.size(); iter++) if (m_oprtrToken[iter]->tokNo() == searchFor) return m_oprtrToken[iter];
-	std::cerr << "SearchFor: Requested Token not Found!" << std::endl;
+	std::cerr << "SearchFor: Requested Token not Found! Looking for Token with id: " << searchFor << std::endl;
 	system("pause");
 	return nullptr;
 }
