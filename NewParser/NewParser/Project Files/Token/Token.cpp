@@ -68,6 +68,15 @@ unsigned int OprtrToken::retPreced()
 	return preced;
 }
 
+void OprtrToken::chgOprtr(const char ent)
+{
+	if (ent != '*' && ent != '/' && ent != '+' && ent != '-') throw std::runtime_error("chgOprtr() : Invalid Operator!");
+	if (ent == '*' || ent == '/')preced = 2;
+	else preced = 1;
+	m_oprtr = ent;
+	m_tokn = charPtrDouble(&ent) + '0';
+}
+
 unsigned int OprdToken::retDigits(int ent)
 {
 	unsigned int digCount = 0;

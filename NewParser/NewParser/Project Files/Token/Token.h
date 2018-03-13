@@ -39,6 +39,7 @@ public:
 	}
 
 	unsigned int retPreced();
+	void chgOprtr(const char ent);
 
 };
 

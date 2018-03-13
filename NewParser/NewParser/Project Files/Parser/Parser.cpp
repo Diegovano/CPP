@@ -50,6 +50,14 @@ void Parser::tokenise()
 		m_oprdToken.push_back(new OprdToken(tempOprd.c_str()));
 		if (iter < m_str.size()) m_oprtrToken.push_back(new OprtrToken(m_str[iter]));
 	}
+	for (unsigned int iter = 0; iter < m_oprtrToken.size(); iter++)
+	{
+		if (m_oprtrToken[iter]->retCont() == '-')
+		{
+			searchOprd(m_oprtrToken[iter]->tokNo() + 1)->chgTokCont(searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont()*-1);
+			m_oprtrToken[iter]->chgOprtr('+');
+		}
+	}
 }
 
 double Parser::getRes()
@@ -98,11 +106,6 @@ void Parser::parse()
 				resolve(searchOprd(m_oprtrToken[iter]->tokNo() - 1), res);
 				iter = 0;
 				break;
-			case('-'):
-				res = searchOprd(m_oprtrToken[iter]->tokNo() - 1)->retCont() - searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont();
-				resolve(searchOprd(m_oprtrToken[iter]->tokNo() - 1), res);
-				iter = 0;
-				break;
 			}
 		}
 	}
@@ -120,7 +123,6 @@ void Parser::resolve(OprdToken* lhOprd, double res)
 	{
 		searchFor(iter + 3 + lhOprd->tokNo())->chgTokNo(iter + lhOprd->tokNo() + 1);
 	}
-	printTokens();
 }
 
 Token* Parser::searchFor(unsigned int searchFor)

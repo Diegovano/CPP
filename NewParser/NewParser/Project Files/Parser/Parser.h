@@ -40,6 +40,11 @@ public:
 
 	double getRes();
 	void printTokens();
+
+	~Parser()
+	{
+		delete m_oprdToken[0];
+	}
 };
 
 bool isOperator(char ent);
