@@ -38,17 +38,41 @@ void Parser::tokenise()
 {
 	for (unsigned int iter = 0; iter < m_str.size(); iter++)
 	{
+		bool tokenPushed = false;
 		std::string tempOprd;
 		for (; iter < m_str.size(); iter++)
 		{
 			if (!isOperator(m_str[iter]))
 			{
-				tempOprd.push_back(m_str[iter]);
+				if (m_str[iter] == '(')
+				{
+					int origIter = iter;
+					std::string contBrack;
+					++iter;
+					unsigned int quantOpen = 1, quantClosed = 0; //Have to fix: second time parser fails because of problem counting parentheses
+					for (; quantClosed != quantOpen; ++iter)
+					{
+						if (iter > m_str.size())
+						{
+							std::cerr << __FUNCTION__ << ": At line " << __LINE__ <<
+								": No no closing bracket closing char number " << origIter + 1 << "!" << std::endl;
+							system("pause");
+							throw;
+						}
+						if (m_str[iter] == '(') ++quantOpen;
+						else if (m_str[iter] == ')')++quantClosed;
+						contBrack.push_back(m_str[iter]);
+					}
+					Bracket brack(contBrack.c_str());
+					m_oprdToken.push_back(new OprdToken(brack.getRes(), m_oprdToken.size() + m_oprtrToken.size() + 1));
+					tokenPushed = true;
+				}
+				else tempOprd.push_back(m_str[iter]);
 			}
 			else break;
 		}
-		m_oprdToken.push_back(new OprdToken(tempOprd.c_str()));
-		if (iter < m_str.size()) m_oprtrToken.push_back(new OprtrToken(m_str[iter]));
+		if(!tokenPushed) m_oprdToken.push_back(new OprdToken(tempOprd.c_str(), m_oprdToken.size() + m_oprtrToken.size() + 1));
+		if (iter < m_str.size()) m_oprtrToken.push_back(new OprtrToken(m_str[iter], m_oprdToken.size() + m_oprtrToken.size() + 1));
 	}
 	for (unsigned int iter = 0; iter < m_oprtrToken.size(); iter++)
 	{
@@ -73,7 +97,8 @@ void Parser::printTokens()
 
 void Parser::parse()
 {
-	while (Token::tokQuant() != 1)
+	if (m_oprdToken.size() + m_oprtrToken.size() == 1) res = m_oprdToken[0]->retCont();
+	while (m_oprdToken.size() + m_oprtrToken.size() != 1)
 	{
 		for (unsigned int iter = 0; iter < m_oprtrToken.size(); iter++)
 		{
@@ -119,7 +144,7 @@ void Parser::resolve(OprdToken* lhOprd, double res)
 	delete oprtr;
 	delete oprd;
 	lhOprd->chgTokCont(res);
-	for (unsigned int iter = 0; iter < Token::tokQuant() - lhOprd->tokNo(); ++iter)
+	for (unsigned int iter = 0; iter < m_oprdToken.size() + m_oprtrToken.size() - lhOprd->tokNo(); ++iter)
 	{
 		searchFor(iter + 3 + lhOprd->tokNo())->chgTokNo(iter + lhOprd->tokNo() + 1);
 	}
@@ -148,4 +173,12 @@ OprtrToken* Parser::searchOprtr(unsigned int searchFor)
 	std::cerr << "SearchOprtr: Requested Token not Found!" << std::endl;
 	system("pause");
 	return nullptr;
+}
+
+
+Bracket::Bracket(const char* entCont)
+{
+	contBrack = entCont;
+	Parser parse(contBrack);
+	res = parse.getRes();
 }

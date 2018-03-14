@@ -10,11 +10,12 @@ int main()
 		{
 			system("cls");
 			std::string ent;
-			std::getline(std::cin, ent);
-			Parser parse(ent.c_str());
-//			Parser parse("65+6-5*2-1");
-			std::cout << parse.getRes() << std::endl;
+//			std::getline(std::cin, ent);
+//			Parser* parse = new Parser(ent.c_str());
+			Parser* parse = new Parser("20*(4+(2/(4-2)))");
+			std::cout << parse->getRes() << std::endl;
 			system("pause");
+			delete parse;
 		}
 		catch (std::runtime_error)
 		{

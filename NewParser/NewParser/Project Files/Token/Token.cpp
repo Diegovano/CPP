@@ -1,12 +1,5 @@
 #include "Token.h"
 
-int Token::m_tokenQuant = 0;
-
-unsigned int Token::tokQuant()
-{
-	return m_tokenQuant;
-}
-
 unsigned int Token::tokNo()
 {
 	return m_tokenNo;
@@ -70,7 +63,11 @@ unsigned int OprtrToken::retPreced()
 
 void OprtrToken::chgOprtr(const char ent)
 {
-	if (ent != '*' && ent != '/' && ent != '+' && ent != '-') throw std::runtime_error("chgOprtr() : Invalid Operator!");
+	if (ent != '*' && ent != '/' && ent != '+' && ent != '-')
+	{
+		std::cerr << "chgOprtr() : Invalid Operator!" << std::endl;
+		throw;
+	}
 	if (ent == '*' || ent == '/')preced = 2;
 	else preced = 1;
 	m_oprtr = ent;
@@ -93,4 +90,9 @@ void OprdToken::chgTokCont(double chgdTok)
 {
 	m_oprd = chgdTok;
 	m_tokn = chgdTok;
+}
+
+double Bracket::getRes()
+{
+	return res;
 }

@@ -4,22 +4,18 @@
 class Token
 {
 protected:
-	Token(double entTok) : m_tokn(entTok), m_tokenNo(++m_tokenQuant)
+	Token(double entTok, unsigned int entTokNo) : m_tokn(entTok), m_tokenNo(entTokNo)
 	{
 	}
 
 	double m_tokn;
 	unsigned int m_tokenNo;
-	static int m_tokenQuant;
 	double charPtrDouble(const char *ent);
 public:
 	virtual ~Token()
 	{
-		m_tokenQuant--;
 //		std::cout << "Destructor called!" << std::endl;
 	}
-
-	static unsigned int tokQuant();
 
 	unsigned int tokNo();
 	virtual double retCont();
@@ -31,9 +27,14 @@ class OprtrToken : public Token
 	char m_oprtr;
 	unsigned int preced;
 public:
-	OprtrToken(const char entTok) : m_oprtr(entTok), Token(charPtrDouble(&entTok) + '0')
+	OprtrToken(const char entTok, unsigned int entTokNo) : m_oprtr(entTok), Token(charPtrDouble(&entTok) + '0', entTokNo)
 	{
-		if (m_oprtr != '*' && m_oprtr != '/' && m_oprtr != '+' && m_oprtr != '-') throw std::runtime_error("OprtrToken() : Invalid Operator!");
+		if (m_oprtr != '*' && m_oprtr != '/' && m_oprtr != '+' && m_oprtr != '-')
+		{
+			std::cerr << "OprtrToken() : Invalid Operator!" << std::endl;
+			system("pause");
+			throw;
+		}
 		if (m_oprtr == '*' || m_oprtr == '/')preced = 2;
 		else preced = 1;
 	}
@@ -48,17 +49,22 @@ class OprdToken : public Token
 	double m_oprd;
 	unsigned int retDigits(int ent);
 public:
-	OprdToken(double entTok) : m_oprd(entTok), Token(entTok)
+	OprdToken(double entTok, unsigned int entTokNo) : m_oprd(entTok), Token(entTok, entTokNo)
 	{
 	}
-	OprdToken(const char *entTok) : m_oprd(charPtrDouble(entTok)), Token(charPtrDouble(entTok))
+	OprdToken(const char *entTok, unsigned int entTokNo) : m_oprd(charPtrDouble(entTok)), Token(charPtrDouble(entTok), entTokNo)
 	{
 	}
 
 	void chgTokCont(double chgdTok);
 };
 
-class BrackToken : public Token
+class Bracket
 {
+	const char* contBrack;
+	double res;
+public:
+	Bracket(const char* entCont); //Defined in Parser.cpp
 
+	double getRes();
 };
