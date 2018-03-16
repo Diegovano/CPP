@@ -33,6 +33,7 @@ public:
 		{
 			std::cerr << "Parser: Constr char*: 2 Operators in succession, invalid String!" << std::endl;
 			system("pause");
+			throw;
 		}
 		tokenise();
 		parse();

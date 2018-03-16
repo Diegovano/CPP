@@ -49,7 +49,7 @@ void Parser::tokenise()
 					int origIter = iter;
 					std::string contBrack;
 					++iter;
-					unsigned int quantOpen = 1, quantClosed = 0; //Have to fix: second time parser fails because of problem counting parentheses
+					unsigned int quantOpen = 1, quantClosed = 0;
 					for (; quantClosed != quantOpen; ++iter)
 					{
 						if (iter > m_str.size())
@@ -63,6 +63,7 @@ void Parser::tokenise()
 						else if (m_str[iter] == ')')++quantClosed;
 						contBrack.push_back(m_str[iter]);
 					}
+					contBrack.pop_back();
 					Bracket brack(contBrack.c_str());
 					m_oprdToken.push_back(new OprdToken(brack.getRes(), m_oprdToken.size() + m_oprtrToken.size() + 1));
 					tokenPushed = true;
@@ -114,7 +115,7 @@ void Parser::parse()
 				{
 					std::cerr << __FUNCTION__ << ": at line " << __LINE__ << ": Cannot Divide by 0!" << std::endl;
 					system("pause");
-					break;
+					throw;
 				}
 				res = searchOprd(m_oprtrToken[iter]->tokNo() - 1)->retCont() / searchOprd(m_oprtrToken[iter]->tokNo() + 1)->retCont();
 				resolve(searchOprd(m_oprtrToken[iter]->tokNo() - 1), res);

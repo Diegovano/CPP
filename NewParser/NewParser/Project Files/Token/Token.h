@@ -14,7 +14,7 @@ protected:
 public:
 	virtual ~Token()
 	{
-//		std::cout << "Destructor called!" << std::endl;
+
 	}
 
 	unsigned int tokNo();
