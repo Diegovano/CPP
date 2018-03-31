@@ -11,9 +11,14 @@ int main()
 	unsigned int rng1;
 	std::cout << "Specify maximum number to randomly generate." << std::endl;
 	std::cin >> rng1;
+	std::cout << "The odds of getting " << quantNums << " equal numbers is 1 in " << pow(rng1 + 1, quantNums - 1) << '.' << std::endl;
+	float sleepSecs;
+	std::cout << "How many seconds delay between attempts?" << std::endl;
+	std::cin >> sleepSecs;
+	unsigned int sleeptime = sleepSecs * 1000;
 	srand(static_cast<unsigned int>(time(NULL)));
 	std::vector<unsigned int> vec(quantNums);
-	unsigned int sleeptime = 0;
+	std::cout << std::endl;
 	for (auto &a : vec)
 	{
 		a = rand() % (rng1 + 1);
@@ -37,9 +42,9 @@ int main()
 			{
 				std::cout << ' ';
 			}
-			Sleep(sleeptime);
 		}
 		std::cout << std::endl;
+		Sleep(sleeptime);
 	}
 	std::cout << std::endl << "Found " << quantNums << " equal numbers after " << attempts << " attemps! Pheww..." << std::endl;
 	system("pause");
