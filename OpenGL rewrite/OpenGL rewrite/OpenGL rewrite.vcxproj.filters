@@ -19,4 +19,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="vsh.shader">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="fsh.shader">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
