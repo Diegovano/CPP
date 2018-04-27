@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -63,12 +64,11 @@ namespace GLabs
 			glGetShaderiv(m_shaderID, GL_COMPILE_STATUS, &status);
 			if (status != GL_TRUE)
 			{
-				GLint infoLogLength = 0;
-				glGetShaderiv(m_shaderID, GL_INFO_LOG_LENGTH, &infoLogLength);
-				GLchar* buffer = (GLchar*)alloca(infoLogLength * sizeof(GLchar));
-				GLsizei bufferSize;
-				glGetShaderInfoLog(m_shaderID, infoLogLength * sizeof(GLchar), &bufferSize, buffer);
-				std::cout << "Compile Error: " << (buffer) << std::endl;
+				GLint logSize = 0;
+				glGetShaderiv(m_shaderID, GL_INFO_LOG_LENGTH, &logSize);
+				std::vector<GLchar> errorLog(logSize);				
+				glGetShaderInfoLog(m_shaderID, logSize, &logSize, &errorLog[0]);
+				std::cout << "Compile Error: " << errorLog[1] << std::endl;
 				return false;
 			}
 			glCompileShader(m_shaderID);
@@ -175,15 +175,15 @@ GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) /
 
 //	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-/*	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), nullptr);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
-*/
-//	return elementArrayBuffer.BufferID();
+
+	return elementArrayBuffer.BufferID();
 //	return manElementArrayBuffer;
-	return arrayBuffer.BufferID();
+//	return arrayBuffer.BufferID();
 }
 
 GLuint ShaderProgram()
