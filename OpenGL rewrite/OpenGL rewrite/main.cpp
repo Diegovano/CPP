@@ -99,9 +99,9 @@ namespace GLabs
 				glAttachShader(m_programID, shaderToAttach.m_shaderID);
 			}
 		}
-		void AddAttribute(GLuint AttributeNumber, const char* AttributeName)
+		void AddAttribute(GLuint attributeNumber, const char* attributeName)
 		{
-			glBindAttribLocation(m_programID, AttributeNumber, AttributeName);
+			glBindAttribLocation(m_programID, attributeNumber, attributeName);
 		}
 		bool Link()
 		{
@@ -163,13 +163,12 @@ GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) /
 	GLabs::Buffer arrayBuffer;
 	arrayBuffer.Data(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-//	GLuint manArrayBuffer;
-//	glGenBuffers(1, &manArrayBuffer);
-//	glBindBuffer(GL_ARRAY_BUFFER, manArrayBuffer);
+	GLuint tempArrayBuffer;
+	glGenBuffers(1, &tempArrayBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, tempArrayBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	GLushort indices[]
+/*	GLushort indices[]
 	{
 		0,1,2
 	};
@@ -177,11 +176,12 @@ GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) /
 	GLabs::Buffer elementArrayBuffer;
 	elementArrayBuffer.Data(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-//	GLuint manElementArrayBuffer;
-//	glGenBuffers(1, &manElementArrayBuffer);
-//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, manElementArrayBuffer);
-
-//	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	GLuint tempElemArrayBuffer;
+	glGenBuffers(1, &tempElemArrayBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, tempArrayBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+*/
+//	arrayBuffer.Bind(GL_ARRAY_BUFFER);
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
@@ -189,9 +189,10 @@ GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) /
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), nullptr);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
 
-	return elementArrayBuffer.BufferID();
-//	return manElementArrayBuffer;
-//	return arrayBuffer.BufferID();
+//	return elementArrayBuffer.BufferID();
+	return arrayBuffer.BufferID();
+//	return tempElemArrayBuffer;
+//	return tempArrayBuffer;
 }
 
 GLuint ShaderProgram()
@@ -255,13 +256,13 @@ int main()
 		glViewport(0, 0, width, height);
 
 		glClear(GL_COLOR_BUFFER_BIT);
-		glClearColor(0.0f, 0.0f, 0.0f, +1.0f);
+		glClearColor(0.0f, 0.0f, 0.5f, +1.0f);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleBuffer);
-//		glBindBuffer(GL_ARRAY_BUFFER, triangleBuffer);
+//		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, triangleBuffer);
 
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
-//		glDrawArrays(GL_TRIANGLES, 0, 3);
+//		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
