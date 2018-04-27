@@ -60,18 +60,19 @@ namespace GLabs
 
 		bool Compile()
 		{
+			glCompileShader(m_shaderID);
 			GLint status;
 			glGetShaderiv(m_shaderID, GL_COMPILE_STATUS, &status);
 			if (status != GL_TRUE)
 			{
-				GLint logSize = 0;
-				glGetShaderiv(m_shaderID, GL_INFO_LOG_LENGTH, &logSize);
-				std::vector<GLchar> errorLog(logSize);				
-				glGetShaderInfoLog(m_shaderID, logSize, &logSize, &errorLog[0]);
-				std::cout << "Compile Error: " << errorLog[1] << std::endl;
+				GLint infoLogLength = 0;
+				glGetProgramiv(m_shaderID, GL_INFO_LOG_LENGTH, &infoLogLength);
+				GLchar* buffer = (GLchar*)alloca(infoLogLength * sizeof(GLchar));
+				GLsizei bufferSize;
+				glGetProgramInfoLog(m_shaderID, infoLogLength * sizeof(GLchar), &bufferSize, buffer);
+				std::cout << "Compile Error: " << buffer << std::endl;
 				return false;
 			}
-			glCompileShader(m_shaderID);
 			m_compiled = 1;
 			return true;
 		}
@@ -85,7 +86,7 @@ namespace GLabs
 	{
 	protected:
 		GLuint m_programID;
-		bool linked = false;
+		bool m_linked = false;
 	public:
 		ShaderProgram()
 		{
@@ -117,12 +118,12 @@ namespace GLabs
 				std::cout << "Link Error: " << (buffer) << std::endl;
 				return false;
 			}
-			linked = true;
+			m_linked = true;
 			return true;
 		}
 		void UseProgram()
 		{
-			if (!linked)
+			if (!m_linked)
 			{
 				std::cerr << "Program Not Linked!" << std::endl;
 				return;
@@ -146,12 +147,19 @@ GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) /
 		glm::vec3 colour;
 	};
 
-	Vertex vertices[]
+/*	Vertex vertices[]
 	{
 		Vertex{ glm::vec2(0.0f + 0.01f*(posOnBase % 100), 0.0f - 0.01f*(height % 100) / 2), glm::vec3(+1.0f, +1.0f, +1.0f) },
 		Vertex{ glm::vec2(0.0f, 0.0f + (height % 100) / 2), glm::vec3(+0.5f, +0.25f, +0.0f) },
 		Vertex{ glm::vec2(0.0f - 0.01f*(base % 100 - posOnBase % 100)), glm::vec3(+0.0f, +0.25f, +0.5f) }
+	}; */
+	Vertex vertices[]
+	{
+		Vertex{ glm::vec2(+1.0f, -1.0f), glm::vec3(+1.0f, +1.0f, +1.0f) },
+		Vertex{ glm::vec2(+0.0f, +1.0f), glm::vec3(+0.5f, +0.25f, +0.0f) },
+		Vertex{ glm::vec2(-1.0f, -1.0f), glm::vec3(+0.0f, +0.25f, +0.5f) }
 	};
+
 	GLabs::Buffer arrayBuffer;
 	arrayBuffer.Data(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
