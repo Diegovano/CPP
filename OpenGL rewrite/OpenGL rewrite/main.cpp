@@ -146,7 +146,6 @@ GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) /
 		glm::vec2 position;
 		glm::vec3 colour;
 	};
-
 /*	Vertex vertices[]
 	{
 		Vertex{ glm::vec2(0.0f + 0.01f*(posOnBase % 100), 0.0f - 0.01f*(height % 100) / 2), glm::vec3(+1.0f, +1.0f, +1.0f) },
@@ -155,9 +154,13 @@ GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) /
 	}; */
 	Vertex vertices[]
 	{
-		Vertex{ glm::vec2(+1.0f, -1.0f), glm::vec3(+1.0f, +1.0f, +1.0f) },
-		Vertex{ glm::vec2(+0.0f, +1.0f), glm::vec3(+0.5f, +0.25f, +0.0f) },
-		Vertex{ glm::vec2(-1.0f, -1.0f), glm::vec3(+0.0f, +0.25f, +0.5f) }
+		Vertex{ glm::vec2(+1.0f, -1.0f), glm::vec3(+1.0f, +0.0f, +0.0f) },
+		Vertex{ glm::vec2(+0.0f, +1.0f), glm::vec3(+0.0f, +1.0f, +0.0f) },
+		Vertex{ glm::vec2(-1.0f, -1.0f), glm::vec3(+0.0f, +0.0f, +1.0f) },
+
+		Vertex{ glm::vec2(-1.0f, +1.0f), glm::vec3(+0.0f, +0.0f, +1.0f) },
+		Vertex{ glm::vec2(+1.0f, +1.0f), glm::vec3(+0.0f, +1.0f, +0.0f) },
+		Vertex{ glm::vec2(+0.0f, -1.0f), glm::vec3(+1.0f, +0.0f, +0.0f) }
 	};
 
 	GLabs::Buffer arrayBuffer;
@@ -168,9 +171,9 @@ GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) /
 	glBindBuffer(GL_ARRAY_BUFFER, tempArrayBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-/*	GLushort indices[]
+	GLushort indices[]
 	{
-		0,1,2
+		0,1,2, 3,4,5
 	};
 
 	GLabs::Buffer elementArrayBuffer;
@@ -178,9 +181,9 @@ GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) /
 
 	GLuint tempElemArrayBuffer;
 	glGenBuffers(1, &tempElemArrayBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, tempArrayBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-*/
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempElemArrayBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 //	arrayBuffer.Bind(GL_ARRAY_BUFFER);
 
 	glEnableVertexAttribArray(0);
@@ -189,10 +192,9 @@ GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) /
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), nullptr);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
 
+	return tempElemArrayBuffer;
 //	return elementArrayBuffer.BufferID();
-	return arrayBuffer.BufferID();
-//	return tempElemArrayBuffer;
-//	return tempArrayBuffer;
+//	return arrayBuffer.BufferID();
 }
 
 GLuint ShaderProgram()
@@ -238,6 +240,10 @@ int main()
 	window = glfwCreateWindow(1280, 720, "Superb Window", 0, 0);
 	glfwMakeContextCurrent(window);
 
+	GLFWimage images[1];
+	images[0] = load_icon("my_icon.png");
+	glfwSetWindowIcon(window, 1, images);
+
 	GLenum errCode = glewInit();
 	if (errCode != GLEW_OK)
 	{
@@ -258,11 +264,11 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(0.0f, 0.0f, 0.5f, +1.0f);
 
-//		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, triangleBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleBuffer);
+//		glBindBuffer(GL_ARRAY_BUFFER, triangleBuffer);
 
-//		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+//		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
