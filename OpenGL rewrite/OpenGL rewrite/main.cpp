@@ -18,10 +18,8 @@ namespace GLabs
 		{
 			glGenBuffers(1, &m_bufferID);
 		}
-		~Buffer()
-		{
-			glDeleteBuffers(1, &m_bufferID);
-		}
+		~Buffer() { }
+
 		void Bind(GLenum bindPoint)
 		{
 			glBindBuffer(bindPoint, m_bufferID);
@@ -166,11 +164,6 @@ GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) /
 	GLabs::Buffer arrayBuffer;
 	arrayBuffer.Data(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	GLuint tempArrayBuffer;
-	glGenBuffers(1, &tempArrayBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, tempArrayBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
 	GLushort indices[]
 	{
 		0,1,2, 3,4,5
@@ -179,22 +172,13 @@ GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) /
 	GLabs::Buffer elementArrayBuffer;
 	elementArrayBuffer.Data(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	GLuint tempElemArrayBuffer;
-	glGenBuffers(1, &tempElemArrayBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, tempElemArrayBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-//	arrayBuffer.Bind(GL_ARRAY_BUFFER);
-
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), nullptr);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
 
-	return tempElemArrayBuffer;
-//	return elementArrayBuffer.BufferID();
-//	return arrayBuffer.BufferID();
+	return elementArrayBuffer.BufferID();
 }
 
 GLuint ShaderProgram()
@@ -240,10 +224,6 @@ int main()
 	window = glfwCreateWindow(1280, 720, "Superb Window", 0, 0);
 	glfwMakeContextCurrent(window);
 
-	GLFWimage images[1];
-	images[0] = load_icon("my_icon.png");
-	glfwSetWindowIcon(window, 1, images);
-
 	GLenum errCode = glewInit();
 	if (errCode != GLEW_OK)
 	{
@@ -251,6 +231,8 @@ int main()
 		glfwTerminate();
 		return -1;
 	}
+
+//	glEnable(GL_DEPTH_TEST);
 
 	GLuint triangleBuffer = Triangle(50, 50, 25);
 	GLuint program = ShaderProgram();
