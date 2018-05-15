@@ -136,37 +136,37 @@ namespace GLabs
 
 }
 
-GLint Triangle(unsigned int height, unsigned int base, unsigned int posOnBase) //each value is from 0 to 100.
+GLint Triangle(int height, int base, int posOnBase) //each value is from 0 to 100.
 {
-	
 	struct Vertex
 	{
 		glm::vec2 position;
 		glm::vec3 colour;
 	};
-/*	Vertex vertices[]
-	{
-		Vertex{ glm::vec2(0.0f + 0.01f*(posOnBase % 100), 0.0f - 0.01f*(height % 100) / 2), glm::vec3(+1.0f, +1.0f, +1.0f) },
-		Vertex{ glm::vec2(0.0f, 0.0f + (height % 100) / 2), glm::vec3(+0.5f, +0.25f, +0.0f) },
-		Vertex{ glm::vec2(0.0f - 0.01f*(base % 100 - posOnBase % 100)), glm::vec3(+0.0f, +0.25f, +0.5f) }
-	}; */
 	Vertex vertices[]
 	{
-		Vertex{ glm::vec2(+1.0f, -1.0f), glm::vec3(+1.0f, +0.0f, +0.0f) },
+		Vertex{ glm::vec2(0.0f, height/200.0f), glm::vec3(+1.0f, +1.0f, +1.0f) },
+		Vertex{ glm::vec2(-(base-posOnBase)/100.0f, -(height/200.0f)), glm::vec3(+0.5f, +0.25f, +0.0f) },
+		Vertex{ glm::vec2((base - (base - posOnBase))/100.0f, -(height/200.0f)), glm::vec3(+0.0f, +0.25f, +0.5f) }
+	};
+
+/*	Vertex vertices[]
+	{
 		Vertex{ glm::vec2(+0.0f, +1.0f), glm::vec3(+0.0f, +1.0f, +0.0f) },
 		Vertex{ glm::vec2(-1.0f, -1.0f), glm::vec3(+0.0f, +0.0f, +1.0f) },
+		Vertex{ glm::vec2(+1.0f, -1.0f), glm::vec3(+1.0f, +0.0f, +0.0f) },
 
-		Vertex{ glm::vec2(-1.0f, +1.0f), glm::vec3(+0.0f, +0.0f, +1.0f) },
+		Vertex{ glm::vec2(+0.0f, -1.0f), glm::vec3(+1.0f, +0.0f, +0.0f) },
 		Vertex{ glm::vec2(+1.0f, +1.0f), glm::vec3(+0.0f, +1.0f, +0.0f) },
-		Vertex{ glm::vec2(+0.0f, -1.0f), glm::vec3(+1.0f, +0.0f, +0.0f) }
-	};
+		Vertex{ glm::vec2(-1.0f, +1.0f), glm::vec3(+0.0f, +0.0f, +1.0f) }
+	}; */
 
 	GLabs::Buffer arrayBuffer;
 	arrayBuffer.Data(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	GLushort indices[]
 	{
-		0,1,2, 3,4,5
+		0,1,2
 	};
 
 	GLabs::Buffer elementArrayBuffer;
@@ -220,6 +220,10 @@ int main()
 		std::cerr << "GLFW Initialisation failure!" << std::endl;
 	}
 
+	std::cout << "Height, Base then Position on base!\n";
+	unsigned int a, b, c;
+	std::cin >> a >> b >> c;
+
 	GLFWwindow* window;
 	window = glfwCreateWindow(1280, 720, "Superb Window", 0, 0);
 	glfwMakeContextCurrent(window);
@@ -232,9 +236,9 @@ int main()
 		return -1;
 	}
 
-//	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 
-	GLuint triangleBuffer = Triangle(50, 50, 25);
+	GLuint triangleBuffer = Triangle(70,95,50);
 	GLuint program = ShaderProgram();
 
 	while (!glfwWindowShouldClose(window))
@@ -243,13 +247,13 @@ int main()
 		glfwGetWindowSize(window, &width, &height);
 		glViewport(0, 0, width, height);
 
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.0f, 0.0f, 0.5f, +1.0f);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleBuffer);
 //		glBindBuffer(GL_ARRAY_BUFFER, triangleBuffer);
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
 //		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
