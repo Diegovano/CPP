@@ -31,6 +31,11 @@ namespace GLabs
 			Bind(bindPoint);
 			glBufferData(bindPoint, size, data, usage);
 		}
+		template<typename _Ty>
+		void SubData(GLenum bindPoint, uint32_t offset, uint32_t size, _Ty* data)
+		{
+			glBufferSubData(bindPoint, offset, size, data);
+		}
 		const GLuint BufferID()
 		{
 			return m_bufferID;
@@ -137,51 +142,24 @@ namespace GLabs
 
 }
 
-GLint Triangle(int height, int base, int posOnBase) //each value is from 0 to 100.
+const float X_DELTA = 0.1f;
+const unsigned int NUM_VERTS_TRI = 3;
+const unsigned int NUM_FLOATS_VERTS = 6;
+const unsigned int TRIANGLE_BYTE_SIZE = NUM_FLOATS_VERTS * NUM_VERTS_TRI * sizeof(float);
+const unsigned int MAX_TRIS = 20;
+unsigned int numTris;
+
+void sendDataToOpenGL() 
 {
-	struct Vertex
-	{
-		glm::vec3 position;
-		glm::vec3 colour;
-	};
-
-/*	Vertex vertices[]
-	{
-		Vertex{ glm::vec2(0.0f, height/200.0f), glm::vec3(+1.0f, +1.0f, +1.0f) },
-		Vertex{ glm::vec2(-(base-posOnBase)/100.0f, -(height/200.0f)), glm::vec3(+0.5f, +0.25f, +0.0f) },
-		Vertex{ glm::vec2((base - (base - posOnBase))/100.0f, -(height/200.0f)), glm::vec3(+0.0f, +0.25f, +0.5f) }
-	}; */
-	const float RED_TRIANGLE_Z = 0.5f;
-	const float BLUE_TRIANGLE_Z = -0.5f;
-	Vertex vertices[]
-	{
-		Vertex{ glm::vec3(+0.0f, +1.0f, -1.0f), glm::vec3(+0.0f, +0.0f, +1.0f) },
-		Vertex{ glm::vec3(-1.0f, -1.0f, RED_TRIANGLE_Z), glm::vec3(+1.0f, +0.0f, +0.0f) },
-		Vertex{ glm::vec3(+1.0f, -1.0f, RED_TRIANGLE_Z), glm::vec3(+1.0f, +0.0f, +0.0f) },
-
-		Vertex{ glm::vec3(+0.0f, -1.0f, BLUE_TRIANGLE_Z), glm::vec3(+0.0f, +0.0f, +1.0f) },
-		Vertex{ glm::vec3(+1.0f, +1.0f, BLUE_TRIANGLE_Z), glm::vec3(+0.0f, +0.0f, +1.0f) },
-		Vertex{ glm::vec3(+0.0f, +1.0f, BLUE_TRIANGLE_Z), glm::vec3(+0.0f, +0.0f, +1.0f) }
-	}; 
-
-	GLabs::Buffer arrayBuffer;
-	arrayBuffer.Data(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	GLushort indices[]
-	{
-		0,1,2, 3,4,5
-	};
-
-	GLabs::Buffer elementArrayBuffer;
-	elementArrayBuffer.Data(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	GLabs::Buffer vertexBuffer;
+	vertexBuffer.Bind(GL_ARRAY_BUFFER);
+	glBufferData(GL_ARRAY_BUFFER, MAX_TRIS*TRIANGLE_BYTE_SIZE, NULL, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-
-	return elementArrayBuffer.BufferID();
 }
 
 GLuint ShaderProgram()
@@ -216,16 +194,35 @@ GLuint ShaderProgram()
 	return Program.ProgramID();
 }
 
+void sendTri()
+{
+	if (numTris == MAX_TRIS)
+	{
+		return;
+	}
+	const float TRI_X = -1 + numTris * X_DELTA;
+	struct Vertex
+	{
+		glm::vec3 position;
+		glm::vec3 colour;
+	};
+
+	Vertex thisTri[]
+	{
+		Vertex{ glm::vec3(TRI_X, +1.0f, +0.0f), glm::vec3(+1.0f, +0.0f, +0.0f) },
+		Vertex{ glm::vec3(TRI_X + X_DELTA, +1.0f, +0.0f), glm::vec3(+1.0f, +0.0f, +0.0f) },
+		Vertex{ glm::vec3(TRI_X, +0.0f, +0.0f), glm::vec3(+1.0f, +0.0f, +0.0f) }
+	};
+	glBufferSubData(GL_ARRAY_BUFFER, numTris*TRIANGLE_BYTE_SIZE, TRIANGLE_BYTE_SIZE, thisTri);
+	numTris++;
+}
+
 int main()
 {
 	if (!glfwInit())
 	{
 		std::cerr << "GLFW Initialisation failure!" << std::endl;
 	}
-
-//	std::cout << "Height, Base then Position on base!\n";
-//	unsigned int a, b, c;
-//	std::cin >> a >> b >> c;
 
 	GLFWwindow* window;
 	window = glfwCreateWindow(1280, 720, "Superb Window", 0, 0);
@@ -241,7 +238,7 @@ int main()
 
 	glEnable(GL_DEPTH_TEST);
 
-	GLuint triangleBuffer = Triangle(70,95,50);
+	sendDataToOpenGL();
 	GLuint program = ShaderProgram();
 
 	while (!glfwWindowShouldClose(window))
@@ -253,14 +250,14 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(+0.0f, +0.0f, +0.0f, +1.0f);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleBuffer);
-//		glBindBuffer(GL_ARRAY_BUFFER, triangleBuffer);
+		sendTri();
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-//		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, (numTris-1)*NUM_VERTS_TRI, numTris * NUM_VERTS_TRI);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		system("pause");
 	}
 
 	glfwDestroyWindow(window);
