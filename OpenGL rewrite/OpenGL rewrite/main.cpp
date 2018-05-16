@@ -65,10 +65,10 @@ namespace GLabs
 			if (status != GL_TRUE)
 			{
 				GLint infoLogLength = 0;
-				glGetProgramiv(m_shaderID, GL_INFO_LOG_LENGTH, &infoLogLength);
+				glGetShaderiv(m_shaderID, GL_INFO_LOG_LENGTH, &infoLogLength);
 				GLchar* buffer = (GLchar*)alloca(infoLogLength * sizeof(GLchar));
 				GLsizei bufferSize;
-				glGetProgramInfoLog(m_shaderID, infoLogLength * sizeof(GLchar), &bufferSize, buffer);
+				glGetShaderInfoLog(m_shaderID, infoLogLength * sizeof(GLchar), &bufferSize, buffer);
 				std::cout << "Compile Error: " << buffer << std::endl;
 				return false;
 			}
@@ -151,17 +151,17 @@ GLint Triangle(int height, int base, int posOnBase) //each value is from 0 to 10
 		Vertex{ glm::vec2(-(base-posOnBase)/100.0f, -(height/200.0f)), glm::vec3(+0.5f, +0.25f, +0.0f) },
 		Vertex{ glm::vec2((base - (base - posOnBase))/100.0f, -(height/200.0f)), glm::vec3(+0.0f, +0.25f, +0.5f) }
 	}; */
-	const float RED_TRIANGLE_Z = -0.5f;
-	const float BLUE_TRIANGLE_Z = 0.5f;
+	const float RED_TRIANGLE_Z = 0.5f;
+	const float BLUE_TRIANGLE_Z = -0.5f;
 	Vertex vertices[]
 	{
-		Vertex{ glm::vec3(+0.0f, +1.0f, RED_TRIANGLE_Z), glm::vec3(+1.0f, +0.0f, +0.0f) },
+		Vertex{ glm::vec3(+0.0f, +1.0f, -1.0f), glm::vec3(+0.0f, +0.0f, +1.0f) },
 		Vertex{ glm::vec3(-1.0f, -1.0f, RED_TRIANGLE_Z), glm::vec3(+1.0f, +0.0f, +0.0f) },
 		Vertex{ glm::vec3(+1.0f, -1.0f, RED_TRIANGLE_Z), glm::vec3(+1.0f, +0.0f, +0.0f) },
 
 		Vertex{ glm::vec3(+0.0f, -1.0f, BLUE_TRIANGLE_Z), glm::vec3(+0.0f, +0.0f, +1.0f) },
 		Vertex{ glm::vec3(+1.0f, +1.0f, BLUE_TRIANGLE_Z), glm::vec3(+0.0f, +0.0f, +1.0f) },
-		Vertex{ glm::vec3(-1.0f, +1.0f, BLUE_TRIANGLE_Z), glm::vec3(+0.0f, +0.0f, +1.0f) }
+		Vertex{ glm::vec3(+0.0f, +1.0f, BLUE_TRIANGLE_Z), glm::vec3(+0.0f, +0.0f, +1.0f) }
 	}; 
 
 	GLabs::Buffer arrayBuffer;
@@ -169,7 +169,7 @@ GLint Triangle(int height, int base, int posOnBase) //each value is from 0 to 10
 
 	GLushort indices[]
 	{
-		0,1,2
+		0,1,2, 3,4,5
 	};
 
 	GLabs::Buffer elementArrayBuffer;
@@ -251,12 +251,12 @@ int main()
 		glViewport(0, 0, width, height);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(0.0f, 0.0f, 0.5f, +1.0f);
+		glClearColor(+0.0f, +0.0f, +0.0f, +1.0f);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleBuffer);
 //		glBindBuffer(GL_ARRAY_BUFFER, triangleBuffer);
 
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 //		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
