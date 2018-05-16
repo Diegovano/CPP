@@ -58,6 +58,7 @@ namespace GLabs
 
 		bool Compile()
 		{
+			std::cout << "Compiling shader " << m_shaderID << ".\n";
 			glCompileShader(m_shaderID);
 			GLint status;
 			glGetShaderiv(m_shaderID, GL_COMPILE_STATUS, &status);
@@ -140,26 +141,28 @@ GLint Triangle(int height, int base, int posOnBase) //each value is from 0 to 10
 {
 	struct Vertex
 	{
-		glm::vec2 position;
+		glm::vec3 position;
 		glm::vec3 colour;
-	};
-	Vertex vertices[]
-	{
-		Vertex{ glm::vec2(0.0f, height/200.0f), glm::vec3(+1.0f, +1.0f, +1.0f) },
-		Vertex{ glm::vec2(-(base-posOnBase)/100.0f, -(height/200.0f)), glm::vec3(+0.5f, +0.25f, +0.0f) },
-		Vertex{ glm::vec2((base - (base - posOnBase))/100.0f, -(height/200.0f)), glm::vec3(+0.0f, +0.25f, +0.5f) }
 	};
 
 /*	Vertex vertices[]
 	{
-		Vertex{ glm::vec2(+0.0f, +1.0f), glm::vec3(+0.0f, +1.0f, +0.0f) },
-		Vertex{ glm::vec2(-1.0f, -1.0f), glm::vec3(+0.0f, +0.0f, +1.0f) },
-		Vertex{ glm::vec2(+1.0f, -1.0f), glm::vec3(+1.0f, +0.0f, +0.0f) },
-
-		Vertex{ glm::vec2(+0.0f, -1.0f), glm::vec3(+1.0f, +0.0f, +0.0f) },
-		Vertex{ glm::vec2(+1.0f, +1.0f), glm::vec3(+0.0f, +1.0f, +0.0f) },
-		Vertex{ glm::vec2(-1.0f, +1.0f), glm::vec3(+0.0f, +0.0f, +1.0f) }
+		Vertex{ glm::vec2(0.0f, height/200.0f), glm::vec3(+1.0f, +1.0f, +1.0f) },
+		Vertex{ glm::vec2(-(base-posOnBase)/100.0f, -(height/200.0f)), glm::vec3(+0.5f, +0.25f, +0.0f) },
+		Vertex{ glm::vec2((base - (base - posOnBase))/100.0f, -(height/200.0f)), glm::vec3(+0.0f, +0.25f, +0.5f) }
 	}; */
+	const float RED_TRIANGLE_Z = -0.5f;
+	const float BLUE_TRIANGLE_Z = 0.5f;
+	Vertex vertices[]
+	{
+		Vertex{ glm::vec3(+0.0f, +1.0f, RED_TRIANGLE_Z), glm::vec3(+1.0f, +0.0f, +0.0f) },
+		Vertex{ glm::vec3(-1.0f, -1.0f, RED_TRIANGLE_Z), glm::vec3(+1.0f, +0.0f, +0.0f) },
+		Vertex{ glm::vec3(+1.0f, -1.0f, RED_TRIANGLE_Z), glm::vec3(+1.0f, +0.0f, +0.0f) },
+
+		Vertex{ glm::vec3(+0.0f, -1.0f, BLUE_TRIANGLE_Z), glm::vec3(+0.0f, +0.0f, +1.0f) },
+		Vertex{ glm::vec3(+1.0f, +1.0f, BLUE_TRIANGLE_Z), glm::vec3(+0.0f, +0.0f, +1.0f) },
+		Vertex{ glm::vec3(-1.0f, +1.0f, BLUE_TRIANGLE_Z), glm::vec3(+0.0f, +0.0f, +1.0f) }
+	}; 
 
 	GLabs::Buffer arrayBuffer;
 	arrayBuffer.Data(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -175,8 +178,8 @@ GLint Triangle(int height, int base, int posOnBase) //each value is from 0 to 10
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), nullptr);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 
 	return elementArrayBuffer.BufferID();
 }
@@ -220,9 +223,9 @@ int main()
 		std::cerr << "GLFW Initialisation failure!" << std::endl;
 	}
 
-	std::cout << "Height, Base then Position on base!\n";
-	unsigned int a, b, c;
-	std::cin >> a >> b >> c;
+//	std::cout << "Height, Base then Position on base!\n";
+//	unsigned int a, b, c;
+//	std::cin >> a >> b >> c;
 
 	GLFWwindow* window;
 	window = glfwCreateWindow(1280, 720, "Superb Window", 0, 0);
