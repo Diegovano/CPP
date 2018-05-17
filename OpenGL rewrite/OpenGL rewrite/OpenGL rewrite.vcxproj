@@ -69,18 +69,20 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies/GLFW/include;$(SolutionDir)Dependencies/GLEW/include;$(SolutionDir)Dependencies</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)OpenGL rewrite/Dependencies/GLFW/include;$(SolutionDir)OpenGL rewrite/Dependencies/GLEW/include;$(SolutionDir)OpenGL rewrite/Dependencies/GLFW/lib-vc2015;$(SolutionDir)OpenGL rewrite/Dependencies</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;GLM_ENABLE_EXPERIMENTAL</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies/GLFW/lib-vc2015;$(SolutionDir)Dependencies/GLEW/lib/Release/Win32</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)OpenGL rewrite/Dependencies/GLFW/lib-vc2015;$(SolutionDir)OpenGL rewrite/Dependencies/GLEW/lib/Release/Win32</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -121,11 +123,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="rsc\abs\GLabs.cpp" />
+    <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fsh.shader" />
-    <None Include="vsh.shader" />
+    <None Include="Dependencies\GLFW\lib-vc2015\glfw3.dll" />
+    <None Include="rsc\sh\fsh.shader" />
+    <None Include="rsc\sh\vsh.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Dependencies\GLEW\include\GL\eglew.h" />
+    <ClInclude Include="Dependencies\GLEW\include\GL\glew.h" />
+    <ClInclude Include="Dependencies\GLEW\include\GL\glxew.h" />
+    <ClInclude Include="Dependencies\GLEW\include\GL\wglew.h" />
+    <ClInclude Include="Dependencies\GLFW\include\GLFW\glfw3.h" />
+    <ClInclude Include="Dependencies\GLFW\include\GLFW\glfw3native.h" />
+    <ClInclude Include="Dependencies\glm\glm.hpp" />
+    <ClInclude Include="Dependencies\glm\simd\common.h" />
+    <ClInclude Include="Dependencies\glm\simd\exponential.h" />
+    <ClInclude Include="Dependencies\glm\simd\geometric.h" />
+    <ClInclude Include="Dependencies\glm\simd\integer.h" />
+    <ClInclude Include="Dependencies\glm\simd\matrix.h" />
+    <ClInclude Include="Dependencies\glm\simd\packing.h" />
+    <ClInclude Include="Dependencies\glm\simd\platform.h" />
+    <ClInclude Include="Dependencies\glm\simd\trigonometric.h" />
+    <ClInclude Include="Dependencies\glm\simd\vector_relational.h" />
+    <ClInclude Include="rsc\abs\GLabs.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Dependencies\GLFW\lib-vc2015\glfw3.lib" />
+    <Library Include="Dependencies\GLFW\lib-vc2015\glfw3dll.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
