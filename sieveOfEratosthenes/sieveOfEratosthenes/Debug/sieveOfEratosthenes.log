@@ -1,5 +1,0 @@
-﻿  Source.cpp
-d:\diego\source\repos\sieveoferatosthenes\sieveoferatosthenes\source.cpp(60): warning C4244: 'initializing': conversion from '__int64' to 'double', possible loss of data
-d:\diego\source\repos\sieveoferatosthenes\sieveoferatosthenes\source.cpp(64): warning C4244: 'initializing': conversion from '__int64' to 'double', possible loss of data
-  sieveOfEratosthenes.vcxproj -> D:\Diego\source\repos\sieveOfEratosthenes\Debug\sieveOfEratosthenes.exe
-  sieveOfEratosthenes.vcxproj -> D:\Diego\source\repos\sieveOfEratosthenes\Debug\sieveOfEratosthenes.pdb (Partial PDB)

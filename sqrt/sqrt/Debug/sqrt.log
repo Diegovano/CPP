@@ -1,4 +1,0 @@
-﻿  Source.cpp
-d:\diego\source\repos\sqrt\sqrt\source.cpp(23): warning C4172: returning address of local variable or temporary: answer
-  sqrt.vcxproj -> D:\Diego\source\repos\sqrt\Debug\sqrt.exe
-  sqrt.vcxproj -> D:\Diego\source\repos\sqrt\Debug\sqrt.pdb (Partial PDB)
