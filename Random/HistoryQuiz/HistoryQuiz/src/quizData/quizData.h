@@ -9,6 +9,7 @@ class QuizData
 	std::vector<Event> m_questions;
 public:
 	static std::vector<Event> WW1QuizData(void);
+	static std::vector<Event> FranceAnnees30Data(void);
 
 public: //add quiz data to questions
 	void AddQuestions(std::vector<Event> events);

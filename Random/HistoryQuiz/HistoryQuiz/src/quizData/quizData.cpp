@@ -14,6 +14,17 @@ std::vector<Event> QuizData::WW1QuizData(void)
 	return dateContainer;
 }
 
+std::vector<Event> QuizData::FranceAnnees30Data(void)
+{
+	std::vector<Event> dateContainer;
+	dateContainer.push_back(*new Event("de la manifestation de l'extreme droite", Date(1934, 2, 6)));
+	dateContainer.push_back(*new Event("du krash Boursier", Date(1929)));
+	dateContainer.push_back(*new Event("de l'election de Leon Blum", Date(1936)));
+	dateContainer.push_back(*new Event("de la signature des accords Matignon", Date(1936, 6, 7)));
+	
+	return dateContainer;
+}
+
 void QuizData::AddQuestions(std::vector<Event> events)
 {
 	m_questions.insert(std::end(m_questions), std::begin(events), std::end(events));

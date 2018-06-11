@@ -5,6 +5,7 @@ int main(int argc, char* argv[])
 {
 	QuizCore quiz;
 	unsigned int sel;
+	double score = 0;
 	std::cout << "Combien de questions? Entrez '0' pour avoir toutes les questions possibles. ";
 	std::cin >> sel;
 	if (sel == 0) sel = quiz.GetNoQuestions() - 1; //for loop starts at 0
@@ -14,7 +15,7 @@ int main(int argc, char* argv[])
 		Event currentQuestion = quiz.GetRandEvent();
 		unsigned int year, month, day;
 		std::cout << "Quelle etait la date ";
-		std::cout << currentQuestion.GetName() << std::endl;
+		std::cout << currentQuestion.GetName() << '?' << std::endl;
 		std::cout << "On attend ";
 		switch (currentQuestion.GetDate().GetType())
 		{
@@ -67,9 +68,16 @@ int main(int argc, char* argv[])
 
 		}
 		if (!correct) std::cout << "Faux.";
-		else std::cout << "Vrai!";
+		else
+		{
+			std::cout << "Vrai!";
+			score++;
+		}
 		std::cout << std::endl << std::endl;
 	}
+	score /= (sel + 1);
+	score * 100;
+	std::cout << "Vous Avez " << score << "% des reponses correctes!\n";
 	system("pause");
 	return 0;
 }
