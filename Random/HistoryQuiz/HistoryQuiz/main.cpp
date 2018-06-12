@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
 	double score = 0;
 	std::cout << "Combien de questions? Entrez '0' pour avoir toutes les questions possibles. ";
 	std::cin >> sel;
-	if (sel == 0) sel = quiz.GetNoQuestions() - 1; //for loop starts at 0
+	if (sel == 0) sel = quiz.GetNoQuestions(); //for loop starts at 0
 	for (unsigned int i = 0; i < sel; i++)
 	{
 		bool correct = false;
@@ -67,17 +67,29 @@ int main(int argc, char* argv[])
 			}
 
 		}
-		if (!correct) std::cout << "Faux.";
+		if (!correct)
+		{
+			std::cout << "Faux.\n";
+			std::cout << "La reponse correcte etait: ";
+			currentQuestion.GetDate().PrintDate();
+			if (currentQuestion.IsRanged())
+			{
+				std::cout << " -> ";
+				currentQuestion.GetEnd().PrintDate();
+			}
+			std::cout << std::endl;
+		}
 		else
 		{
-			std::cout << "Vrai!";
+			std::cout << "Vrai!\n";
 			score++;
 		}
-		std::cout << std::endl << std::endl;
+		std::cout << std::endl;
 	}
-	score /= (sel + 1);
-	score * 100;
+	score /= sel;
+	score *= 100;
 	std::cout << "Vous Avez " << score << "% des reponses correctes!\n";
+	delete &quiz;
 	system("pause");
 	return 0;
 }

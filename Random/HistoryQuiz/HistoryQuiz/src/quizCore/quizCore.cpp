@@ -2,8 +2,16 @@
 
 QuizCore::QuizCore() : m_quiz(*new QuizData), m_timesAsked(0), m_askedQuestionsIndex(new int[m_quiz.GetQuestions().size()])
 {
-	m_quiz.AddQuestions(QuizData::WW1QuizData());
-	m_quiz.AddQuestions(QuizData::FranceAnnees30Data());
+	m_quiz.AddQuestions(QuizData::WW1());
+	m_quiz.AddQuestions(QuizData::FranceAnnees30());
+	m_quiz.AddQuestions(QuizData::FrancePdtWW2());
+	m_quiz.AddQuestions(QuizData::GuerreAlgerieEtVe());
+}
+
+QuizCore::~QuizCore()
+{
+	delete &m_quiz;
+	delete m_askedQuestionsIndex;
 }
 
 const Event QuizCore::GetRandEvent()
@@ -22,7 +30,7 @@ const Event QuizCore::GetRandEvent()
 		}
 		m_askedQuestionsIndex[m_timesAsked] = randIndex;
 		m_timesAsked++;
-		return m_quiz.GetQuestions().at(randIndex);
+		return *m_quiz.GetQuestions().at(randIndex);
 	}
 	else
 	{

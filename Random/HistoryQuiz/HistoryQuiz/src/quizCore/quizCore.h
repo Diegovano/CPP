@@ -10,6 +10,7 @@ class QuizCore
 	unsigned int m_timesAsked;
 public:
 	QuizCore();
+	~QuizCore();
 
 public:
 	const Event GetRandEvent();

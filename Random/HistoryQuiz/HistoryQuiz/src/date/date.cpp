@@ -1,4 +1,5 @@
 #include "date.h"
+#include <iostream>
 
 Date::Date(unsigned int year, unsigned int month, unsigned int day)
 	: m_year(year), m_month(month), m_day(day), m_dateType(YEAR_MONTH_DAY)
@@ -18,6 +19,21 @@ Date::Date(unsigned int year)
 Date::Date()
 {
 
+}
+
+Date::~Date()
+{
+	
+}
+
+void Date::PrintDate(void) const
+{
+	switch (m_dateType)
+	{
+	case(YEAR_MONTH_DAY): std::cout << m_day << '/';
+	case(YEAR_MONTH): std::cout << m_month << '/';
+	case(YEAR): std::cout << m_year;
+	}
 }
 
 const bool Date::operator==(Date &other) const

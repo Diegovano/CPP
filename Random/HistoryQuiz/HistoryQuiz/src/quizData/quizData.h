@@ -6,15 +6,19 @@
 
 class QuizData
 {
-	std::vector<Event> m_questions;
+	std::vector<Event*> m_questions;
 public:
-	static std::vector<Event> WW1QuizData(void);
-	static std::vector<Event> FranceAnnees30Data(void);
+	~QuizData();
+
+	static std::vector<Event*> WW1(void);
+	static std::vector<Event*> FranceAnnees30(void);
+	static std::vector<Event*> FrancePdtWW2(void);
+	static std::vector<Event*> GuerreAlgerieEtVe(void);
 
 public: //add quiz data to questions
-	void AddQuestions(std::vector<Event> events);
+	void AddQuestions(std::vector<Event*> events);
 
 public: //getters
-	const std::vector<Event>& GetQuestions() const;
+	const std::vector<Event*>& GetQuestions() const;
 };
 #endif

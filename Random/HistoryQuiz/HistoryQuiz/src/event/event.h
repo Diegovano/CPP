@@ -13,6 +13,8 @@ public:
 	explicit Event(const char * name, Date begin);
 	explicit Event(const char * name, Date begin, Date end);
 
+	~Event();
+
 public:
 	bool CheckDate(Date checkBegin);
 	bool CheckRanged(Date checkBegin, Date checkEnd);

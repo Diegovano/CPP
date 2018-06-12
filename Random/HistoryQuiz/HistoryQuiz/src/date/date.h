@@ -16,10 +16,13 @@ public:
 	explicit Date(unsigned int year);
 	Date();
 
+	~Date();
+
 public:
 	const bool operator==(Date &other) const;
 
 public: //getters
+	void PrintDate() const;
 	const unsigned int Day() const;
 	const unsigned int Month() const;
 	const unsigned int Year() const;

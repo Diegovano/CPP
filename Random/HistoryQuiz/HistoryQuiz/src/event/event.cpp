@@ -11,6 +11,11 @@ Event::Event(const char * name, Date begin, Date end)
 
 }
 
+Event::~Event()
+{
+	
+}
+
 bool Event::CheckDate(Date checkBegin)
 {
 	if (checkBegin == m_begin) return true;
