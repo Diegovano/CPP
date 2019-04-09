@@ -24,6 +24,9 @@
     <ClCompile Include="src\Board\SubGrid\SubGrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\SudokuCore\SudokuCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\logger.h">
@@ -33,6 +36,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Board\SubGrid\SubGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SudokuCore\SudokuCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

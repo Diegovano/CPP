@@ -18,8 +18,7 @@ enum Difficulty
 enum ScanType
 {
 	COL,
-	ROW,
-	BOTH
+	ROW
 };
 
 class Board
@@ -29,15 +28,19 @@ class Board
 	SubGrid* grids[3][3];
 	unsigned char evalArr[9];
 
-	unsigned char& arrayFill(SubGrid grid);
-	unsigned char& arrayFill(ScanType toScan, unsigned int rowColCheck);
-	const bool checkArray(unsigned char* arr);
-	const bool checkArray(SubGrid grid);
-	const bool checkArray(ScanType toScan, unsigned int rowColCheck);
+	unsigned char& ArrayFill(SubGrid grid);
+	unsigned char& ArrayFill(ScanType toScan, unsigned int rowColCheck);
+	const bool CheckArray(unsigned char* arr);
+	const bool CheckArray(SubGrid grid);
+	const bool CheckArray(ScanType toScan, unsigned int rowColCheck);
+	void FillAndCheck();
+	void RemoveValues();
 
 public:
 
-	Board(Difficulty p_diff, bool p_isChallengeBoard = false) : level(p_diff), isChallengeBoard(p_isChallengeBoard)
+	Board() { } //empty default to then copy into
+
+	Board(Difficulty p_diff) : level(p_diff), isChallengeBoard(false)
 	{
 		for (unsigned int iter = 0; iter < 3; iter++)
 		{
@@ -50,20 +53,42 @@ public:
 		srand(static_cast<unsigned int>(time(NULL)));
 
 		FillAndCheck();
-
-		/*grids[0][0]->changeValues(0, 0, '1');
-		grids[0][0]->changeValues(1, 0, '2');
-		grids[0][0]->changeValues(2, 0, '3');
-		grids[0][0]->changeValues(0, 1, '4');
-		grids[0][0]->changeValues(1, 1, '5');
-		grids[0][0]->changeValues(2, 1, '6');
-		grids[0][0]->changeValues(0, 2, '7');
-		grids[0][0]->changeValues(1, 2, '8');
-		grids[0][0]->changeValues(2, 2, '9');*/
-
 	}
 
-	void FillAndCheck();
+	Board(Board* p_solutionBoard)
+	{
+		isChallengeBoard = true;
+
+		for (unsigned int iter = 0; iter < 3; iter++)
+		{
+			for (unsigned int iter2 = 0; iter2 < 3; iter2++)
+			{
+				grids[iter][iter2] = new SubGrid;
+			}
+		}
+
+		for (unsigned int iter = 0; iter < 3; iter++)
+		{
+			for (unsigned int iter2 = 0; iter2 < 3; iter2++)
+			{
+				for (unsigned int iter3 = 0; iter3 < 3; iter3++)
+				{
+					for (unsigned int iter4 = 0; iter4 < 3; iter4++)
+					{
+						grids[iter][iter2]->ChangeValues(iter3, iter4, p_solutionBoard->grids[iter][iter2]->GetValues(iter3, iter4));;
+					}
+				}
+			}
+		}
+		level = p_solutionBoard->level;
+
+		RemoveValues();
+	}
+
+	unsigned char GetBoardValue(unsigned int col, unsigned int row);
+	void ModifyBoardValue(unsigned int col, unsigned int row, unsigned char changeChar);
+
+	Board GetBoard() const;
 
 	void EmptyDrawBoard();
 	void DrawBoard();

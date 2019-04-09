@@ -17,6 +17,6 @@ public:
 		}
 	}
 
-	const char getValues(unsigned int row, unsigned int col);
-	void changeValues(unsigned int row, unsigned int col, char change);
+	const char GetValues(unsigned int row, unsigned int col);
+	void ChangeValues(unsigned int row, unsigned int col, char change);
 };
