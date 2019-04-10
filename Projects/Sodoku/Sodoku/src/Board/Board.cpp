@@ -121,6 +121,7 @@ void Board::DrawBoard()
 	//Num Rows Elem: Num Rows * 2 + 1 -> 19 //same for columns
 	for (unsigned int iter = 0; iter < 19; iter++) //rows
 	{
+
 		for (unsigned int iter2 = 0; iter2 < 19; iter2++) //columns
 		{
 			char nextSym = (iter2 + iter) % 2 == 0 ? iter % 2 == 0 ? '*' :

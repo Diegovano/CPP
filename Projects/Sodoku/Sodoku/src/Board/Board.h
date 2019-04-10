@@ -38,8 +38,6 @@ class Board
 
 public:
 
-	Board() { } //empty default to then copy into
-
 	Board(Difficulty p_diff) : level(p_diff), isChallengeBoard(false)
 	{
 		for (unsigned int iter = 0; iter < 3; iter++)
@@ -55,34 +53,62 @@ public:
 		FillAndCheck();
 	}
 
-	Board(Board* p_solutionBoard)
+	Board(Board* inputBoard)
 	{
-		isChallengeBoard = true;
-
-		for (unsigned int iter = 0; iter < 3; iter++)
+		if (!inputBoard->isChallengeBoard)
 		{
-			for (unsigned int iter2 = 0; iter2 < 3; iter2++)
-			{
-				grids[iter][iter2] = new SubGrid;
-			}
-		}
+			isChallengeBoard = true;
 
-		for (unsigned int iter = 0; iter < 3; iter++)
-		{
-			for (unsigned int iter2 = 0; iter2 < 3; iter2++)
+			for (unsigned int iter = 0; iter < 3; iter++)
 			{
-				for (unsigned int iter3 = 0; iter3 < 3; iter3++)
+				for (unsigned int iter2 = 0; iter2 < 3; iter2++)
 				{
-					for (unsigned int iter4 = 0; iter4 < 3; iter4++)
+					grids[iter][iter2] = new SubGrid;
+				}
+			}
+
+			for (unsigned int iter = 0; iter < 3; iter++)
+			{
+				for (unsigned int iter2 = 0; iter2 < 3; iter2++)
+				{
+					for (unsigned int iter3 = 0; iter3 < 3; iter3++)
 					{
-						grids[iter][iter2]->ChangeValues(iter3, iter4, p_solutionBoard->grids[iter][iter2]->GetValues(iter3, iter4));;
+						for (unsigned int iter4 = 0; iter4 < 3; iter4++)
+						{
+							grids[iter][iter2]->ChangeValues(iter3, iter4, inputBoard->grids[iter][iter2]->GetValues(iter3, iter4));;
+						}
 					}
 				}
 			}
-		}
-		level = p_solutionBoard->level;
+			level = inputBoard->level;
 
-		RemoveValues();
+			RemoveValues();
+		}
+		else //if input board is challenge, just copy
+		{
+			for (unsigned int iter = 0; iter < 3; iter++)
+			{
+				for (unsigned int iter2 = 0; iter2 < 3; iter2++)
+				{
+					grids[iter][iter2] = new SubGrid;
+				}
+			}
+
+			for (unsigned int iter = 0; iter < 3; iter++)
+			{
+				for (unsigned int iter2 = 0; iter2 < 3; iter2++)
+				{
+					for (unsigned int iter3 = 0; iter3 < 3; iter3++)
+					{
+						for (unsigned int iter4 = 0; iter4 < 3; iter4++)
+						{
+							grids[iter][iter2]->ChangeValues(iter3, iter4, inputBoard->grids[iter][iter2]->GetValues(iter3, iter4));;
+						}
+					}
+				}
+			}
+			level = inputBoard->level;
+		}
 	}
 
 	unsigned char GetBoardValue(unsigned int col, unsigned int row);
