@@ -118,18 +118,31 @@ void Board::FillAndCheck()
 ///</summary>
 void Board::DrawBoard()
 {
+	std::cout << std::endl;
+
+	for (unsigned int iter = 0; iter < 36; iter++)
+	{
+		if ((iter - 1) % 2 == 0 && (iter - 1) % 4 != 0) std::cout << (iter - 1) / 4 + 1; //iter - 1 due to offset from row numbers
+		else std::cout << ' ';
+	}
+	std::cout << std::endl;
+
 	//Num Rows Elem: Num Rows * 2 + 1 -> 19 //same for columns
 	for (unsigned int iter = 0; iter < 19; iter++) //rows
 	{
-
-		for (unsigned int iter2 = 0; iter2 < 19; iter2++) //columns
+		for (int iter2 = -1; iter2 < 19; iter2++) //columns -1 was a very cheap way to add the row numbers afterwards..
 		{
-			char nextSym = (iter2 + iter) % 2 == 0 ? iter % 2 == 0 ? '*' :
-				grids[(iter2 - 1) / 2 / 3][(iter - 1) / 2 / 3]->GetValues((iter2 - 1) / 2 % 3, (iter - 1) / 2 % 3) :
-				iter % 2 == 0 ? '-' : '|'; //choose char
-			if (nextSym == '-' && iter % 6 == 0 && iter % 18 != 0) nextSym = '=';
-			else if (nextSym == '|' && iter2 % 6 == 0 && iter2 % 18 != 0) nextSym = ':';
-			std::cout << nextSym << ' ';
+			if (iter2 == -1 && iter % 2 != 0) std::cout << iter / 2 + 1;
+			else if (iter2 == -1 && iter % 2 == 0) std::cout << ' ';
+			else
+			{
+				char nextSym = (iter2 + iter) % 2 == 0 ? iter % 2 == 0 ? '*' :
+					grids[(iter2 - 1) / 2 / 3][(iter - 1) / 2 / 3]->GetValues((iter2 - 1) / 2 % 3, (iter - 1) / 2 % 3) :
+					iter % 2 == 0 ? '-' : '|'; //choose char
+				if (nextSym == '-' && iter % 6 == 0 && iter % 18 != 0) nextSym = '=';
+				else if (nextSym == '|' && iter2 % 6 == 0 && iter2 % 18 != 0) nextSym = ':';
+				std::cout << nextSym << ' ';
+			}
 		}
 
 		std::cout << std::endl;
