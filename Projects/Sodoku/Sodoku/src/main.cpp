@@ -2,7 +2,11 @@
 
 int main(int argc, char* argv[])
 {
-	SudokuGame game(EASY);
+	unsigned int dif;
+
+	std::cout << "Difficulty: ";
+	std::cin >> dif;
+	SudokuGame game((Difficulty)(dif % 3));
 	game.Launch();
 	system("pause");
 	return 0;
