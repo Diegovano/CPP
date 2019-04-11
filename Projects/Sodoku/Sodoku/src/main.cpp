@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
 
 	std::cout << "Difficulty: ";
 	std::cin >> dif;
-	SudokuGame game((Difficulty)(dif % 3));
+	SudokuGame game((Difficulty)(dif % 4));
 	game.Launch();
 	system("pause");
 	return 0;
